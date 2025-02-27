@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const converter = new showdown.Converter();
 
     function updatePreview() {
-      const markdownText = markdownEditor.value;
-      const htmlContent = converter.makeHtml(markdownText);
+      const markdownText = markdownEditor.innerHTML;
+      const htmlContent = converter.makeHtml(markdownText); 
       markdownPreview.innerHTML = htmlContent;
     }
 

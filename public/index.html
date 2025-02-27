@@ -19,28 +19,16 @@
           <div class="card-header">Components</div>
           <div class="card-body d-flex flex-column gap-3">
             <!-- Selected Components Section (Top) -->
-            <div id="selected-components" class="d-flex flex-column gap-2">
-              <div
-                class="draggable-component p-2 border rounded bg-light"
-                draggable="true"
-                data-type="example"
-              >
-                Example
-              </div>
-            </div>
-
+            <div
+              id="selected-components"
+              class="d-flex flex-column gap-2"
+            ></div>
             <hr />
-
             <!-- Available Components Section (Bottom) -->
-            <div id="available-components" class="d-flex flex-column gap-2">
-              <div
-                class="draggable-component p-2 border rounded bg-light"
-                draggable="true"
-                data-type="example"
-              >
-                Example
-              </div>
-            </div>
+            <div
+              id="available-components"
+              class="d-flex flex-column gap-2"
+            ></div>
           </div>
         </div>
 
@@ -48,11 +36,12 @@
         <div class="card flex-grow-1">
           <div class="card-header">Edit</div>
           <div class="card-body">
-            <textarea
+            <div
               id="markdown-editor"
+              contenteditable="true"
               class="form-control h-100"
               placeholder="Edit your Markdown here..."
-            ></textarea>
+            ></div>
           </div>
         </div>
 
