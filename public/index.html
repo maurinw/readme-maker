@@ -3,9 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Custom CSS -->
+    <!-- CSS -->
     <link rel="stylesheet" href="/css/style.css" />
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
     <title>ReadmeMaker</title>
   </head>
@@ -18,12 +17,43 @@
         <!-- Left Column -->
         <div class="card">
           <div class="card-header">Components</div>
-          <div class="card-body"></div>
+          <div class="card-body d-flex flex-column gap-3">
+            <!-- Selected Components Section (Top) -->
+            <div id="selected-components" class="d-flex flex-column gap-2">
+              <div
+                class="draggable-component p-2 border rounded bg-light"
+                draggable="true"
+                data-type="example"
+              >
+                Example
+              </div>
+            </div>
+
+            <hr />
+
+            <!-- Available Components Section (Bottom) -->
+            <div id="available-components" class="d-flex flex-column gap-2">
+              <div
+                class="draggable-component p-2 border rounded bg-light"
+                draggable="true"
+                data-type="example"
+              >
+                Example
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Middle Column -->
         <div class="card flex-grow-1">
           <div class="card-header">Edit</div>
+          <div class="card-body">
+            <textarea
+              id="markdown-editor"
+              class="form-control h-100"
+              placeholder="Edit your Markdown here..."
+            ></textarea>
+          </div>
         </div>
 
         <!-- Right Column -->
@@ -36,7 +66,9 @@
 
     <!-- Footer -->
     <footer></footer>
-    <!-- JS Files -->
+    <!-- Custom JS Files -->
     <script src="/js/main.js"></script>
+    <script src="/js/preview.js"></script>
+    <script src="/showdown/showdown.min.js"></script>
   </body>
 </html>
