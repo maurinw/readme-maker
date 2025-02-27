@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Test
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
+    <title>ReadmeMaker</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav></nav>
+    <!-- Main Content -->
+    <main>
+      <div class="d-flex gap-3 p-3 h-100">
+        <!-- Left Column -->
+        <div class="card">
+          <div class="card-header">Components</div>
+          <div class="card-body"></div>
+        </div>
+
+        <!-- Middle Column -->
+        <div class="card flex-grow-1">
+          <div class="card-header">Edit</div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="card flex-grow-1">
+          <div class="card-header">Preview</div>
+          <div id="markdown-preview" class="p-3 h-100"></div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer></footer>
+    <!-- JS Files -->
+    <script src="/js/main.js"></script>
+  </body>
 </html>
