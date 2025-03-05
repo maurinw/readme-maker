@@ -1,0 +1,11 @@
+/* Custom styles for elements when in dark mode */
+html[data-bs-theme="dark"] .custom-element {
+  background-color: #333;
+  color: #f1f1f1;
+}
+
+/* Custom styles for elements when in light mode */
+html[data-bs-theme="light"] .custom-element {
+  background-color: #fff;
+  color: #333;
+}
