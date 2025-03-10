@@ -12,7 +12,19 @@ html[data-bs-theme="light"] .custom-element {
 
 html, body {
   height: 100%;
+  margin: 0;
 }
-.container-fluid {
-  height: 100%;
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar {
+  flex: 0 0 auto;
+}
+
+.main-container {
+  flex: 1 1 auto;
+  overflow: auto;
 }
