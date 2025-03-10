@@ -4,10 +4,22 @@ document.addEventListener("DOMContentLoaded", () => {
     .then((componentsData) => {
       const availableList = document.getElementById("availableList");
       const selectedList = document.getElementById("selectedList");
-      const editor = document.getElementById("editorTextarea");
       const preview = document.getElementById("previewArea");
       const converter = new showdown.Converter();
       let activeItem = null;
+
+      const textarea = document.getElementById("editorTextarea");
+      const currentTheme =
+        document.documentElement.getAttribute("data-bs-theme") === "dark"
+          ? "dracula"
+          : "eclipse";
+      const cmEditor = CodeMirror.fromTextArea(textarea, {
+        mode: "markdown",
+        lineNumbers: true,
+        theme: currentTheme,
+        lineWrapping: true
+      });
+      window.cmEditor = cmEditor; 
 
       function updatePreview() {
         let fullMarkdown = "";
@@ -22,10 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       function updateActiveComponent() {
         if (activeItem) {
-          activeItem.setAttribute("data-content", editor.value);
+          activeItem.setAttribute("data-content", cmEditor.getValue());
           updatePreview();
         }
       }
+
+      cmEditor.on("change", updateActiveComponent);
 
       for (const key in componentsData) {
         const li = document.createElement("li");
@@ -82,10 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedList.addEventListener("dragstart", (e) => {
         dragSrcEl = e.target.closest(".list-group-item");
         e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData(
-          "text/plain",
-          dragSrcEl.getAttribute("data-key")
-        );
+        e.dataTransfer.setData("text/plain", dragSrcEl.getAttribute("data-key"));
       });
       selectedList.addEventListener("dragover", (e) => {
         e.preventDefault();
@@ -121,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
         deleteBtn.addEventListener("click", (e) => {
           e.stopPropagation();
           if (activeItem === selectedItem) {
-            editor.value = "";
+            cmEditor.setValue("");
             activeItem = null;
           }
           selectedList.removeChild(selectedItem);
@@ -139,8 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
           if (activeItem) activeItem.classList.remove("active");
           activeItem = selectedItem;
           selectedItem.classList.add("active");
-          editor.value =
-            selectedItem.getAttribute("data-content") || componentsData[key];
+          cmEditor.setValue(
+            selectedItem.getAttribute("data-content") || componentsData[key]
+          );
         });
 
         addDragHandlers(selectedItem);
@@ -149,12 +161,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!activeItem) {
           activeItem = selectedItem;
           selectedItem.classList.add("active");
-          editor.value =
-            selectedItem.getAttribute("data-content") || componentsData[key];
+          cmEditor.setValue(
+            selectedItem.getAttribute("data-content") || componentsData[key]
+          );
         }
       }
 
-      editor.addEventListener("input", updateActiveComponent);
+      updatePreview();
     })
     .catch((error) => console.error("Error loading components:", error));
 });

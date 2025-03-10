@@ -1,16 +1,14 @@
-/* Custom styles for elements when in dark mode */
-html[data-bs-theme="dark"] .custom-element {
-  background-color: #333;
-  color: #f1f1f1;
-}
 
-/* Custom styles for elements when in light mode */
-html[data-bs-theme="light"] .custom-element {
-  background-color: #fff;
-  color: #333;
+html[data-bs-theme="dark"] {
+  --bs-body-bg: #282a36;     
+  --bs-body-color: #f8f9fa;   
 }
 
 .navbar {
   flex: 0 0 auto;
 }
 
+.CodeMirror {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 14px;
+}
