@@ -15,11 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
           : "eclipse";
       const cmEditor = CodeMirror.fromTextArea(textarea, {
         mode: "markdown",
-        lineNumbers: true,
+        lineWrapping: true,
         theme: currentTheme,
-        lineWrapping: true
       });
-      window.cmEditor = cmEditor; 
+      window.cmEditor = cmEditor;
 
       function updatePreview() {
         let fullMarkdown = "";
@@ -96,7 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
       selectedList.addEventListener("dragstart", (e) => {
         dragSrcEl = e.target.closest(".list-group-item");
         e.dataTransfer.effectAllowed = "move";
-        e.dataTransfer.setData("text/plain", dragSrcEl.getAttribute("data-key"));
+        e.dataTransfer.setData(
+          "text/plain",
+          dragSrcEl.getAttribute("data-key")
+        );
       });
       selectedList.addEventListener("dragover", (e) => {
         e.preventDefault();
