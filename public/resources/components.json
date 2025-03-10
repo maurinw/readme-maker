@@ -1,4 +1,5 @@
 {
+    "Title": "# Project Title\n\nA brief description of what this project does and who it's for",
     "Introduction": "## Introduction\n\nWelcome to our project! This document provides an overview of the project's purpose, goals, and scope. It serves as a guide for users and developers to understand what the project is about and how it can be used or contributed to.",
     "Installation": "## Installation\n\nTo install this project, clone the repository and run `npm install` to install all dependencies. Ensure that you have Node.js and npm installed on your system.",
     "Usage": "## Usage\n\nAfter installation, start the project with `npm start` and navigate to `http://localhost:3000` in your web browser. Follow the on-screen instructions for further guidance.",
