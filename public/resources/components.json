@@ -1,0 +1,5 @@
+{
+    "Installation": "## Installation\n\nTo install this project, clone the repository and run `npm install` to install all dependencies.",
+    "Usage": "## Usage\n\nAfter installation, run the project using `npm start` and navigate to `http://localhost:3000` to see it in action.",
+    "License": "## License\n\nThis project is licensed under the MIT License."
+}
