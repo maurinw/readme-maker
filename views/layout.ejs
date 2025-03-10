@@ -3,28 +3,26 @@
   <head>
     <title><%= title %></title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="/stylesheets/theme.css" />
   </head>
   <body>
-    <!-- Navbar Header -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          
-        </a>        
-        <div class="d-flex align-items-center me-3">
+        <div class="ms-auto">
           <div class="dropdown">
             <button
               class="btn btn-secondary dropdown-toggle"
               type="button"
               id="dropdownMenuButton"
               data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
             >
-              Menu
+            <i class="bi bi-sliders2"></i>
             </button>
-            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+            <div
+              class="dropdown-menu dropdown-menu-end"
+              aria-labelledby="dropdownMenuButton"
+            >
               <!-- Sign in button -->
               <button class="dropdown-item btn" type="button">Sign in</button>
               <!-- Sign up button -->
