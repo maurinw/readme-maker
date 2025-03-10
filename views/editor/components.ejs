@@ -1,14 +1,17 @@
-<div class="card h-100">
-  <div class="card-header">Components</div>
-  <div class="card-body">
-    <ul class="list-group" id="componentList">
-      <li class="list-group-item" draggable="true" data-key="Installation">
-        Installation
-      </li>
-      <li class="list-group-item" draggable="true" data-key="Usage">Usage</li>
-      <li class="list-group-item" draggable="true" data-key="License">
-        License
-      </li>
-    </ul>
+<div class="container-fluid" style="height: calc(100vh - 56px);">
+  <div class="row h-100">
+    <div class="col-12">
+      <div class="card h-100">
+        <div class="card-header">Components</div>
+        <div class="card-body d-flex flex-column">
+          <h5>Selected Components</h5>
+          <ul class="list-group border mb-3" id="selectedList">
+          </ul>
+          <h5>Available Components</h5>
+          <ul class="list-group flex-grow-1 overflow-auto" id="availableList">
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

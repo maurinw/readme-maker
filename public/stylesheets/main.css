@@ -12,6 +12,7 @@ html[data-bs-theme="light"] .custom-element {
 
 html, body {
   height: 100%;
+  overflow: hidden;
   margin: 0;
 }
 
@@ -28,3 +29,4 @@ body {
   flex: 1 1 auto;
   overflow: auto;
 }
+
