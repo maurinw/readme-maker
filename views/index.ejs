@@ -1,44 +1,17 @@
 <div class="container-fluid main-container">
-    <div class="row h-100">
-      <div class="col-12 col-md-2">
-        <div class="card h-100">
-           <div class="card-header">
-             Components
-           </div>
-           <div class="card-body overflow-auto">
-             <ul class="list-group">
-               <li class="list-group-item" draggable="true">Component 1</li>
-               <li class="list-group-item" draggable="true">Component 2</li>
-               <li class="list-group-item" draggable="true">Component 3</li>
-             </ul>
-           </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-5">
-        <div class="card h-100">
-           <div class="card-header">
-             Editor
-           </div>
-           <div class="card-body">
-             <textarea class="form-control h-100" placeholder="Edit content..." style="resize:none;"></textarea>
-           </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-5">
-        <div class="card h-100">
-           <div class="card-header">
-             Preview
-           </div>
-           <div class="card-body">
-             <div class="border p-3 h-100">
-               <p>Preview will be displayed here.</p>
-             </div>
-           </div>
-        </div>
-      </div>
+  <div class="row h-100">
+    <div class="col-12 col-md-2">
+      <%- include('editor/components') %>
+    </div>
+    <div class="col-12 col-md-5">
+      <%- include('editor/edit') %>
+    </div>
+    <div class="col-12 col-md-5">
+      <%- include('editor/preview') %>
     </div>
   </div>
+</div>
 
-  <script src="/showdown/showdown.min.js"></script>
-  <script src="/javascript/preview.js"></script>
-  
+<script src="/showdown/showdown.min.js"></script>
+<script src="/javascript/preview.js"></script>
+<script src="/javascript/components.js"></script>

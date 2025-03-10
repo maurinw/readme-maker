@@ -7,8 +7,10 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 const session = require('express-session');
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/auth');
+const profileRouter = require('./routes/profile');
 
 const app = express();
 
@@ -40,6 +42,7 @@ app.use('/showdown', express.static(path.join(__dirname, 'node_modules/showdown/
 
 app.use('/', indexRouter);
 app.use('/auth', usersRouter);
+app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
