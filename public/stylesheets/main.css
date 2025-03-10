@@ -9,3 +9,10 @@ html[data-bs-theme="light"] .custom-element {
   background-color: #fff;
   color: #333;
 }
+
+html, body {
+  height: 100%;
+}
+.container-fluid {
+  height: 100%;
+}
