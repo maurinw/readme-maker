@@ -13,3 +13,19 @@ html[data-bs-theme="dark"] {
   font-size: 14px;
 }
 
+.list-group-item {
+  transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+.list-group-item.active {
+  z-index: 2;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
