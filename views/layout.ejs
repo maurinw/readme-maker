@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-bs-theme="light">
+<html data-bs-theme="dark">
   <head>
     <title><%= title %></title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
@@ -9,50 +9,15 @@
     <link rel="stylesheet" href="/codemirror/theme/dracula.css" />
     <link rel="stylesheet" href="/stylesheets/main.css" />
   </head>
-  <body>
+  <body class="container-fluid container">
     <!-- Navbar -->
-    <nav class="navbar">
-      <div class="container-fluid">
-        <div class="ms-auto">
-          <div class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-            >
-              <i class="bi bi-sliders2"></i>
-            </button>
-            <div
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="dropdownMenuButton"
-            >
-              <!-- Sign in button -->
-              <button class="dropdown-item btn" type="button">Sign in</button>
-              <!-- Sign up button -->
-              <button class="dropdown-item btn" type="button">Sign up</button>
-              <!-- Dark Mode Switch -->
-              <div class="dropdown-item btn">
-                <div class="form-check form-switch">
-                  <label class="form-check-label" for="themeSwitch"
-                    >Dark Mode</label
-                  >
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    role="switch"
-                    id="themeSwitch"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <nav class="row py-3 sticky-top"><%- include('./navbar') %></nav>
 
     <!-- Page Content -->
-    <%- body %>
+    <main class="row"><%- body %></main>
+
+    <!-- Footer -->
+    <footer class="row"><%- include('./footer') %></footer>
 
     <!-- Scripts -->
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
