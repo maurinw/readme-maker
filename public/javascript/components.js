@@ -1,25 +1,25 @@
 export async function initComponents() {
   try {
     // Fetch component data from the JSON file
-    const response = await fetch("/resources/components.json");
+    const response       = await fetch("/resources/components.json");
     const componentsData = await response.json();
 
     // Get DOM elements
-    const availableList = document.getElementById("availableList");
-    const selectedList = document.getElementById("selectedList");
-    const preview = document.getElementById("previewArea");
-    const converter = new showdown.Converter();
+    const availableList  = document.getElementById("availableList");
+    const selectedList   = document.getElementById("selectedList");
+    const textarea       = document.getElementById("editorTextarea");
+    const preview        = document.getElementById("previewArea");
+    const converter      = new showdown.Converter();
 
     let activeItem = null;
-    let dragSrcEl = null;
+    let dragSrcEl  = null;
 
     // Initialize CodeMirror editor
-    const textarea = document.getElementById("editorTextarea");
     const currentTheme =
       document.documentElement.getAttribute("data-bs-theme") === "dark"
         ? "dracula"
         : "eclipse";
-    const cmEditor = CodeMirror.fromTextArea(textarea, {
+    const cmEditor     = CodeMirror.fromTextArea(textarea, {
       mode: "markdown",
       lineWrapping: true,
       theme: currentTheme,
@@ -59,48 +59,27 @@ export async function initComponents() {
       });
     };
 
-    // FLIP animation to smoothly animate list reordering
+    // Directly execute DOM update callback without animation
     const animateListReorder = (domUpdateCallback) => {
-      const items = Array.from(
-        selectedList.querySelectorAll(".list-group-item")
-      );
-      const initialPositions = new Map();
-      items.forEach((item) => {
-        initialPositions.set(item, item.getBoundingClientRect().top);
-      });
-
-      // Apply the DOM changes (the "flip")
       domUpdateCallback();
-
-      const newItems = Array.from(
-        selectedList.querySelectorAll(".list-group-item")
-      );
-      newItems.forEach((item) => {
-        const initialTop = initialPositions.get(item);
-        const newTop = item.getBoundingClientRect().top;
-        const delta = initialTop - newTop;
-        if (delta) {
-          item.style.transform = `translateY(${delta}px)`;
-          item.offsetHeight; // Force reflow
-          item.style.transform = "";
-        }
-      });
     };
 
     // Add an item from the available list to the selected list
-    const addItemToSelected = (availableItem) => {
-      const selectedItem = document.createElement("li");
-      selectedItem.className = "list-group-item";
+    const addItemToSelected    = (availableItem) => {
+      const selectedItem       = document.createElement("li");
+      const key                = availableItem.getAttribute("data-key");
+      selectedItem.className   = "list-group-item";
+
       selectedItem.setAttribute("draggable", "true");
-      const key = availableItem.getAttribute("data-key");
       selectedItem.setAttribute("data-key", key);
       selectedItem.setAttribute("data-content", componentsData[key]);
       selectedItem.textContent = key;
 
       // Create delete button for the component
-      const deleteBtn = document.createElement("button");
+      const deleteBtn     = document.createElement("button");
       deleteBtn.innerHTML = '<i class="bi bi-x-circle"></i>';
       deleteBtn.className = "btn btn-sm btn-danger float-end";
+
       deleteBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         if (activeItem === selectedItem) {
@@ -142,7 +121,7 @@ export async function initComponents() {
 
     // Process and display available components
     for (const key in componentsData) {
-      const li = document.createElement("li");
+      const li     = document.createElement("li");
       li.className = "list-group-item";
       li.setAttribute("draggable", "true");
       li.setAttribute("data-key", key);

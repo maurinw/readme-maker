@@ -1,5 +1,5 @@
 export function initTheme(cmEditor) {
-  const htmlEl = document.documentElement;
+  const htmlEl      = document.documentElement;
   const themeSwitch = document.getElementById("themeSwitch");
 
   const setTheme = (theme) => {
