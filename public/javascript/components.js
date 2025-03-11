@@ -15,15 +15,19 @@ export async function initComponents() {
     let dragSrcEl  = null;
 
     // Initialize CodeMirror editor
-    const currentTheme =
-      document.documentElement.getAttribute("data-bs-theme") === "dark"
-        ? "dracula"
-        : "eclipse";
-    const cmEditor     = CodeMirror.fromTextArea(textarea, {
+    const currentTheme = document.documentElement.getAttribute("data-bs-theme") === "dark" ? "dracula" : "eclipse";
+    const cmEditor = CodeMirror.fromTextArea(textarea, {
       mode: "markdown",
       lineWrapping: true,
       theme: currentTheme,
     });
+
+     // Apply font family, font size, height, padding to CodeMirror editor
+     cmEditor.getWrapperElement().style.fontFamily = '"Courier New", Courier, monospace';
+     cmEditor.getWrapperElement().style.fontSize = '14px';
+     cmEditor.setSize(null, "100%");
+     cmEditor.getWrapperElement().style.padding = '5px';  // Add padding around the text
+
 
     // Update the preview area by concatenating all markdown content
     const updatePreview = () => {
