@@ -1,0 +1,22 @@
+.button {
+    padding: var(--spacing-xs);
+    margin-left: var(--spacing-sm);
+    font-size: var(--font-sm);
+    border-radius: var(--border-radius-s);
+    display: inline-block;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primary-button {
+    color: var(--body-bg-fst);
+    background-color: var(--body-color);
+}
+
+.secondary-button {
+    color: var(--light);
+    background-color: var(--secondary);
+}
+

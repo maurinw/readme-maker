@@ -36,8 +36,6 @@ app.use(session({
 
 // Statische Dateien
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/marked', express.static(path.join(__dirname, 'node_modules/marked/lib')));
-
 app.use('/', indexRouter);
 app.use('/auth', usersRouter);
 app.use('/profile', profileRouter);

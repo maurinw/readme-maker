@@ -1,38 +1,31 @@
-<!-- Page Content -->
-<!-- Components -->
-<div>
-  <div>
-    <div>Components</div>
+<div class="editor-layout">
+  <!-- Fixed-width Column -->
+  <section class="column components">
+    <h2>Components</h2>
+    <!-- Components content -->
     <div>
-      <div>
-        <h5>Selected Components</h5>
-        <ul id="selectedList"></ul>
-      </div>
-      <div>
-        <h5>Available Components</h5>
-        <ul id="availableList"></ul>
-      </div>
+      <h5>Selected Components</h5>
+       <ul id="selectedList"></ul> 
     </div>
-  </div>
-</div>
-
-<!-- Editor -->
-<div>
-  <div>
-    <div>Editor</div>
-
-    <textarea id="editorTextarea" placeholder="Edit content..."></textarea>
-  </div>
-</div>
-
-<!-- Preview -->
-<div>
-  <div>
-    <div>Preview</div>
     <div>
-      <div id="previewArea">
-        <p>Preview will be displayed here.</p>
-      </div>
+      <h5>Available Components</h5>
+       <ul id="availableList"></ul> 
     </div>
-  </div>
+  </section>
+
+  <!-- Fluid Column: Editor -->
+  <section class="column editor">
+    <h2>Editor</h2>
+    <!-- Editor content -->
+     <textarea id="editorTextarea" placeholder="Edit content..."></textarea> 
+  </section>
+
+  <!-- Fluid Column: Preview -->
+  <section class="column preview">
+    <h2>Preview</h2>
+    <!-- Preview content -->
+     <div id="previewArea">
+      <p>Preview will be displayed here.</p>
+    </div> 
+  </section>
 </div>
