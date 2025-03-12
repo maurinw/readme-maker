@@ -6,12 +6,12 @@ export async function initComponents() {
 
     // Get DOM elements
     const availableList = document.getElementById("availableList");
-    const selectedList  = document.getElementById("selectedList");
-    const textarea      = document.getElementById("editorTextarea");
-    const preview       = document.getElementById("previewArea");
+    const selectedList = document.getElementById("selectedList");
+    const textarea = document.getElementById("editorTextarea");
+    const preview = document.getElementById("previewArea");
 
     let activeItem = null;
-    let dragSrcEl  = null;
+    let dragSrcEl = null;
 
     // Update the preview area by concatenating all markdown content
     const updatePreview = () => {
@@ -22,7 +22,6 @@ export async function initComponents() {
           componentsData[item.getAttribute("data-key")];
         fullMarkdown += content + "\n\n";
       });
-      // Use Marked instead of Showdown
       preview.innerHTML = marked.parse(fullMarkdown.trim());
     };
 
@@ -54,21 +53,20 @@ export async function initComponents() {
       domUpdateCallback();
     };
 
-    // Add an item from the available list to the selected list
     const addItemToSelected = (availableItem) => {
-      const selectedItem = document.createElement("li");
-      const key = availableItem.getAttribute("data-key");
-      selectedItem.className = "md-json-comp";
+      const selectedItem     = document.createElement("li");
+      const key              = availableItem.getAttribute("data-key");
+      selectedItem.className = "button md-json-comp";
 
       selectedItem.setAttribute("draggable", "true");
       selectedItem.setAttribute("data-key", key);
       selectedItem.setAttribute("data-content", componentsData[key]);
       selectedItem.textContent = key;
 
-      // Create delete button for the component
-      const deleteBtn = document.createElement("button");
-      deleteBtn.innerHTML = '';
-      deleteBtn.className = "";
+      // Create delete button for the component using a Font Awesome icon
+      const deleteBtn     = document.createElement("button");
+      deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+      deleteBtn.className = "delete-button";
 
       deleteBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -110,7 +108,7 @@ export async function initComponents() {
     // Process and display available components
     for (const key in componentsData) {
       const li = document.createElement("li");
-      li.className = "md-json-comp";
+      li.className = "button md-json-comp";
       li.setAttribute("draggable", "true");
       li.setAttribute("data-key", key);
       li.textContent = key;

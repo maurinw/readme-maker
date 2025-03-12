@@ -1,22 +1,37 @@
 .button {
+    color: var(--button-fst);
+    background-color: var(--button-bg-fst);
     padding: var(--spacing-xs);
-    margin-left: var(--spacing-sm);
     font-size: var(--font-sm);
-    border-radius: var(--border-radius-s);
-    display: inline-block;
     border: none;
+    border-radius: var(--border-radius-sm);
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
-.primary-button {
-    color: var(--body-bg-fst);
-    background-color: var(--body-color);
+.button:hover {
+    background-color: var(--button-bg-snd);
 }
 
-.secondary-button {
-    color: var(--light);
-    background-color: var(--secondary);
+.button:active {
+    background-color: var(--button-bg-trd);
 }
 
+.md-json-comp {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: start;
+    list-style-type: none;
+    user-select: none;
+    margin-top: var(--spacing-xs);
+}
+
+.md-json-comp button.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: auto;
+    color: inherit;
+}

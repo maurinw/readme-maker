@@ -1,0 +1,16 @@
+.card {
+  background-color: var(--body-bg-snd);
+  border: 1px solid var(--body-bg-trd);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: var(--body-bg-snd);
+  border-bottom: 1px solid var(--body-color);
+  padding: var(--spacing-sm);
+}
+
+.card-body {
+  padding: var(--spacing-sm);
+}

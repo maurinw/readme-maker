@@ -1,6 +1,4 @@
 .navbar {
-    background-color: var(--body-bg-fst);
-    color: var(--body-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,7 +13,7 @@
     font-size: var(--font-md);
     font-weight: 600;
 }
-  
+
 .toggle-box {
     gap: var(--spacing-sm);
     font-size: var(--font-sm);

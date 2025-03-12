@@ -8,8 +8,6 @@
 /* Base Column Styling */
 .column {
     padding: var(--spacing-sm);
-    border: 1px solid #ddd;
-    border-radius: 4px;
     white-space: normal;
     overflow-wrap: break-word;
     word-wrap: break-word;

@@ -10,6 +10,10 @@
   --body-bg-fst: #f8f9fa;
   --body-bg-snd: #eeefef;
   --body-bg-trd: #e3e3e3;
+  --button-fst: #010409;
+  --button-bg-fst: #e3e3e3;
+  --button-bg-snd: #eeefef;
+  --button-bg-trd: #f8f9fa;
   --light: #f8f9fa;
   --dark: #010409;
 
@@ -21,7 +25,9 @@
   --spacing-lg: 1.2rem;
   --spacing-xl: 3rem;
 
-  --border-radius-s: 0.25rem;
+  /* Border radius */
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
 
   /* Font sizes */
   --font-xs: 0.75rem;
@@ -38,6 +44,10 @@
   --body-bg-fst: #f8f9fa;
   --body-bg-snd: #eeefef;
   --body-bg-trd: #e3e3e3;
+  --button-bg-fst: #e3e3e3;
+  --button-bg-snd: #eeefef;
+  --button-bg-trd: #f8f9fa;
+  --button-fst: #010409;
 }
 
 /* Dark Theme Overrides */
@@ -46,6 +56,10 @@
   --body-bg-fst: #010409;
   --body-bg-snd: #0e1117;
   --body-bg-trd: #161b23;
+  --button-bg-fst: #161b23;
+  --button-bg-snd: #0e1117;
+  --button-bg-trd: #010409;
+  --button-fst: #f8f9fa;
 }
 
 * {

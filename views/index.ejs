@@ -1,31 +1,40 @@
 <div class="editor-layout">
-  <!-- Fixed-width Column -->
-  <section class="column components">
-    <h2>Components</h2>
-    <!-- Components content -->
-    <div>
-      <h5>Selected Components</h5>
-       <ul id="selectedList"></ul> 
+  <!-- Card for Components -->
+  <div class="card column components">
+    <div class="card-header">
+      <h2>Components</h2>
     </div>
-    <div>
-      <h5>Available Components</h5>
-       <ul id="availableList"></ul> 
+    <div class="card-body">
+      <div>
+        <h5>Selected Components</h5>
+        <ul id="selectedList"></ul>
+      </div>
+      <div>
+        <h5>Available Components</h5>
+        <ul id="availableList"></ul>
+      </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Fluid Column: Editor -->
-  <section class="column editor">
-    <h2>Editor</h2>
-    <!-- Editor content -->
-     <textarea id="editorTextarea" placeholder="Edit content..."></textarea> 
-  </section>
+  <!-- Card for Editor -->
+  <div class="card column editor">
+    <div class="card-header">
+      <h2>Editor</h2>
+    </div>
+    <div class="card-body">
+      <textarea id="editorTextarea" placeholder="Edit content..."></textarea>
+    </div>
+  </div>
 
-  <!-- Fluid Column: Preview -->
-  <section class="column preview">
-    <h2>Preview</h2>
-    <!-- Preview content -->
-     <div id="previewArea">
-      <p>Preview will be displayed here.</p>
-    </div> 
-  </section>
+  <!-- Card for Preview -->
+  <div class="card column preview">
+    <div class="card-header">
+      <h2>Preview</h2>
+    </div>
+    <div class="card-body">
+      <div id="previewArea">
+        <p>Preview will be displayed here.</p>
+      </div>
+    </div>
+  </div>
 </div>
