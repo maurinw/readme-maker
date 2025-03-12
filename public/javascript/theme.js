@@ -1,16 +1,11 @@
-export function initTheme(cmEditor) {
-  const htmlEl      = document.documentElement;
+export function initTheme() {
+  const htmlEl = document.documentElement;
   const themeSwitch = document.getElementById("themeSwitch");
 
   const setTheme = (theme) => {
-    htmlEl.setAttribute("data-bs-theme", theme);
+    htmlEl.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
     themeSwitch.checked = theme === "dark";
-
-    if (cmEditor) {
-      const cmTheme = theme === "dark" ? "dracula" : "eclipse";
-      cmEditor.setOption("theme", cmTheme);
-    }
   };
 
   const storedTheme = localStorage.getItem("theme");

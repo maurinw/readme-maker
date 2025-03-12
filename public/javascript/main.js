@@ -1,7 +1,7 @@
 import { initComponents } from "./components.js";
-import { initTheme }      from "./theme.js";
+import { initTheme } from "./theme.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const cmEditor = await initComponents();
-  initTheme(cmEditor);
+  await initComponents();
+  initTheme();
 });

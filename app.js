@@ -36,10 +36,7 @@ app.use(session({
 
 // Statische Dateien
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
-app.use('/bootstrap-icons', express.static(path.join(__dirname, 'node_modules/bootstrap-icons/font')));
-app.use('/showdown', express.static(path.join(__dirname, 'node_modules/showdown/dist')));
-app.use('/codemirror', express.static(path.join(__dirname, 'node_modules/codemirror')));
+app.use('/marked', express.static(path.join(__dirname, 'node_modules/marked/lib')));
 
 app.use('/', indexRouter);
 app.use('/auth', usersRouter);

@@ -5,51 +5,37 @@ export async function initComponents() {
     const componentsData = await response.json();
 
     // Get DOM elements
-    const availableList  = document.getElementById("availableList");
-    const selectedList   = document.getElementById("selectedList");
-    const textarea       = document.getElementById("editorTextarea");
-    const preview        = document.getElementById("previewArea");
-    const converter      = new showdown.Converter();
+    const availableList = document.getElementById("availableList");
+    const selectedList  = document.getElementById("selectedList");
+    const textarea      = document.getElementById("editorTextarea");
+    const preview       = document.getElementById("previewArea");
 
     let activeItem = null;
     let dragSrcEl  = null;
 
-    // Initialize CodeMirror editor
-    const currentTheme = document.documentElement.getAttribute("data-bs-theme") === "dark" ? "dracula" : "eclipse";
-    const cmEditor = CodeMirror.fromTextArea(textarea, {
-      mode: "markdown",
-      lineWrapping: true,
-      theme: currentTheme,
-    });
-
-     // Apply font family, font size, height, padding to CodeMirror editor
-     cmEditor.getWrapperElement().style.fontFamily = '"Courier New", Courier, monospace';
-     cmEditor.getWrapperElement().style.fontSize = '14px';
-     cmEditor.setSize(null, "100%");
-     cmEditor.getWrapperElement().style.padding = '5px';  // Add padding around the text
-
-
     // Update the preview area by concatenating all markdown content
     const updatePreview = () => {
       let fullMarkdown = "";
-      selectedList.querySelectorAll(".list-group-item").forEach((item) => {
+      selectedList.querySelectorAll(".md-json-comp").forEach((item) => {
         const content =
           item.getAttribute("data-content") ||
           componentsData[item.getAttribute("data-key")];
         fullMarkdown += content + "\n\n";
       });
-      preview.innerHTML = converter.makeHtml(fullMarkdown.trim());
+      // Use Marked instead of Showdown
+      preview.innerHTML = marked.parse(fullMarkdown.trim());
     };
 
-    // Update the active component's content based on the CodeMirror editor
+    // Update the active component's content based on the textarea value
     const updateActiveComponent = () => {
       if (activeItem) {
-        activeItem.setAttribute("data-content", cmEditor.getValue());
+        activeItem.setAttribute("data-content", textarea.value);
         updatePreview();
       }
     };
 
-    cmEditor.on("change", updateActiveComponent);
+    // Listen for input changes in the textarea
+    textarea.addEventListener("input", updateActiveComponent);
 
     // Add basic drag event handlers to list items
     const addDragHandlers = (item) => {
@@ -69,10 +55,10 @@ export async function initComponents() {
     };
 
     // Add an item from the available list to the selected list
-    const addItemToSelected    = (availableItem) => {
-      const selectedItem       = document.createElement("li");
-      const key                = availableItem.getAttribute("data-key");
-      selectedItem.className   = "list-group-item";
+    const addItemToSelected = (availableItem) => {
+      const selectedItem = document.createElement("li");
+      const key = availableItem.getAttribute("data-key");
+      selectedItem.className = "md-json-comp";
 
       selectedItem.setAttribute("draggable", "true");
       selectedItem.setAttribute("data-key", key);
@@ -80,14 +66,14 @@ export async function initComponents() {
       selectedItem.textContent = key;
 
       // Create delete button for the component
-      const deleteBtn     = document.createElement("button");
-      deleteBtn.innerHTML = '<i class="bi bi-x-circle"></i>';
-      deleteBtn.className = "btn btn-sm btn-danger float-end";
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerHTML = '';
+      deleteBtn.className = "";
 
       deleteBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         if (activeItem === selectedItem) {
-          cmEditor.setValue("");
+          textarea.value = "";
           activeItem = null;
         }
         selectedList.removeChild(selectedItem);
@@ -100,15 +86,14 @@ export async function initComponents() {
 
       selectedItem.appendChild(deleteBtn);
 
-      // When the item is clicked, load its content into the editor
+      // When the item is clicked, load its content into the textarea
       selectedItem.addEventListener("click", () => {
         updateActiveComponent();
         if (activeItem) activeItem.classList.remove("active");
         activeItem = selectedItem;
         selectedItem.classList.add("active");
-        cmEditor.setValue(
-          selectedItem.getAttribute("data-content") || componentsData[key]
-        );
+        textarea.value =
+          selectedItem.getAttribute("data-content") || componentsData[key];
       });
 
       addDragHandlers(selectedItem);
@@ -117,16 +102,15 @@ export async function initComponents() {
       if (!activeItem) {
         activeItem = selectedItem;
         selectedItem.classList.add("active");
-        cmEditor.setValue(
-          selectedItem.getAttribute("data-content") || componentsData[key]
-        );
+        textarea.value =
+          selectedItem.getAttribute("data-content") || componentsData[key];
       }
     };
 
     // Process and display available components
     for (const key in componentsData) {
-      const li     = document.createElement("li");
-      li.className = "list-group-item";
+      const li = document.createElement("li");
+      li.className = "md-json-comp";
       li.setAttribute("draggable", "true");
       li.setAttribute("data-key", key);
       li.textContent = key;
@@ -151,7 +135,7 @@ export async function initComponents() {
 
     // Drag & drop event listeners for reordering within the selected list
     selectedList.addEventListener("dragstart", (e) => {
-      dragSrcEl = e.target.closest(".list-group-item");
+      dragSrcEl = e.target.closest(".md-json-comp");
       e.dataTransfer.effectAllowed = "move";
       e.dataTransfer.setData("text/plain", dragSrcEl.getAttribute("data-key"));
     });
@@ -164,7 +148,7 @@ export async function initComponents() {
     selectedList.addEventListener("drop", (e) => {
       e.preventDefault();
       if (dragSrcEl) {
-        const target = e.target.closest(".list-group-item");
+        const target = e.target.closest(".md-json-comp");
         if (target && target !== dragSrcEl) {
           animateListReorder(() => {
             const rect = target.getBoundingClientRect();
@@ -192,8 +176,6 @@ export async function initComponents() {
 
     // Update the preview on initialization
     updatePreview();
-
-    return cmEditor;
   } catch (error) {
     console.error("Error loading components:", error);
   }

@@ -1,29 +1,21 @@
 <!DOCTYPE html>
-<html data-bs-theme="dark">
+<html data-theme="dark">
   <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css" />
-    <link rel="stylesheet" href="/codemirror/lib/codemirror.css" />
-    <link rel="stylesheet" href="/codemirror/theme/eclipse.css" />
-    <link rel="stylesheet" href="/codemirror/theme/dracula.css" />
     <link rel="stylesheet" href="/stylesheets/main.css" />
   </head>
-  <body class="container-fluid container">
+  <body>
     <!-- Navbar -->
-    <nav class="row py-3 sticky-top"><%- include('./navbar') %></nav>
+    <nav><%- include('./navbar') %></nav>
 
     <!-- Page Content -->
-    <main class="row"><%- body %></main>
+    <main><%- body %></main>
 
     <!-- Footer -->
-    <footer class="row"><%- include('./footer') %></footer>
+    <footer><%- include('./footer') %></footer>
 
     <!-- Scripts -->
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/codemirror/lib/codemirror.js"></script>
-    <script src="/codemirror/mode/markdown/markdown.js"></script>
-    <script src="/showdown/showdown.min.js"></script>
+    <script src="/marked/marked.umd.js"></script>
     <script type="module" src="/javascript/main.js"></script>
   </body>
 </html>
