@@ -1,3 +1,5 @@
+@import "./layout.css";
+
 :root {
   /* Colors */
   --primary: #024087;
@@ -62,10 +64,9 @@
   --button-fst: #f8f9fa;
 }
 
-* {
+html, body {
+  height: 100%;
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
 body {
@@ -75,14 +76,207 @@ body {
   background-color: var(--body-bg-fst);
 }
 
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container */
 .container {
   margin: 0 auto;
   padding: var(--spacing-lg) var(--spacing-xl);
-  
 }
 
 @media (max-width: 768px) {
-  .container  {
+  .container {
     padding: var(--spacing-sm) var(--spacing-md);
   }
 }
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-items {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: var(--font-md);
+  font-weight: 600;
+}
+
+.toggle-box {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-sm);
+}
+
+/* Editor Layout */
+.editor-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr 1fr;
+  gap: var(--spacing-md);
+  height: 80vh;
+}
+
+@media (max-width: 768px) {
+  .editor-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: min-content min-content min-content;
+  }
+}
+
+/* Editor Textarea */
+.editor #editorTextarea {
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  background-color: var(--body-bg-snd);
+  color: var(--body-color);
+  max-height: 80vh;
+  min-height: 10lh;
+}
+
+/* Column */
+.column {
+  padding: var(--spacing-sm);
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  overflow: clip scroll;
+}
+
+/* Card */
+.card {
+  background-color: var(--body-bg-snd);
+  border: 1px solid var(--body-bg-trd);
+  border-radius: var(--border-radius-md);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
+  height: 100%;
+}
+
+.card .card-body {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+}
+
+/* Reset any conflicting styles inside the preview area */
+.card .card-body #previewArea * {
+  padding: revert;
+  margin: revert;
+}
+
+/* Now define the marked styles with higher specificity */
+.card .card-body #previewArea p {
+  margin: 1em 0;
+  line-height: 1.5;
+}
+
+.card .card-body #previewArea h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+
+/* Buttons */
+
+.button {
+  color: var(--button-fst);
+  background-color: var(--button-bg-fst);
+  padding: var(--spacing-xs);
+  font-size: var(--font-sm);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  text-align: center;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: var(--button-bg-snd);
+}
+
+.button:active {
+  background-color: var(--button-bg-trd);
+}
+
+.md-json-comp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: start;
+  list-style-type: none;
+  margin-top: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+ul {
+  padding-inline-start: 0;
+}
+
+.md-json-comp button.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* Togglebutton */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 18px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 34px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.switch input:checked+.slider {
+  background-color: var(--primary);
+}
+
+.switch input:checked+.slider:before {
+  transform: translateX(17px);
+}
+
