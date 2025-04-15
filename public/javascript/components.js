@@ -6,9 +6,9 @@ export async function initComponents() {
 
     // Get DOM elements
     const availableList = document.getElementById("availableList");
-    const selectedList = document.getElementById("selectedList");
-    const textarea = document.getElementById("editorTextarea");
-    const preview = document.getElementById("previewArea");
+    const selectedList  = document.getElementById("selectedList");
+    const textarea      = document.getElementById("editorTextarea");
+    const preview       = document.getElementById("previewArea");
 
     let activeItem = null;
     let dragSrcEl = null;
@@ -22,7 +22,10 @@ export async function initComponents() {
           componentsData[item.getAttribute("data-key")];
         fullMarkdown += content + "\n\n";
       });
+      // Render the markdown as HTML for preview.
       preview.innerHTML = marked.parse(fullMarkdown.trim());
+      // Store the raw markdown in a global variable.
+      window.fullMarkdown = fullMarkdown.trim();
     };
 
     // Update the active component's content based on the textarea value

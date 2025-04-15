@@ -3,6 +3,15 @@
   <div class="logo">ReadmeMaker</div>
   <!-- Right Side -->
   <div class="nav-items">
+    <div>
+      <% if (user) { %>
+      <a href="/profile">Profile</a>
+      <a href="/auth/logout">Logout</a>
+      <% } else { %>
+      <a href="/auth/login">Login</a>
+      <a href="/auth/register">Register</a>
+      <% } %>
+    </div>
     <div class="toggle-box">
       <i class="fa-solid fa-sun"></i>
       <label class="switch">

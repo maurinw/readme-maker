@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/globals.css" />
+  </head>
+  <body>
+    <h1>Your Saved Readmes</h1>
+    <% if (readmes.length === 0) { %>
+    <p>You haven't saved any readmes yet.</p>
+    <% } else { %>
+    <ul>
+      <% readmes.forEach(function(readme) { %>
+      <li>
+        <strong><%= readme.title || 'Untitled' %></strong>
+        <!-- A simple form to download the readme -->
+        <form action="/readme/download" method="get" style="display: inline">
+          <input type="hidden" name="readmeId" value="<%= readme._id %>" />
+          <button type="submit">Download</button>
+        </form>
+      </li>
+      <% }); %>
+    </ul>
+    <% } %>
+  </body>
+</html>
