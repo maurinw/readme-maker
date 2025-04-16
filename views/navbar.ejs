@@ -1,17 +1,10 @@
 <div class="navbar">
   <!-- Left Side -->
-  <div class="logo">ReadmeMaker</div>
+  <div class="logo">
+    <a href="/">ReadmeMaker</a>
+  </div>
   <!-- Right Side -->
   <div class="nav-items">
-    <div>
-      <% if (user) { %>
-      <a href="/profile">Profile</a>
-      <a href="/auth/logout">Logout</a>
-      <% } else { %>
-      <a href="/auth/login">Login</a>
-      <a href="/auth/register">Register</a>
-      <% } %>
-    </div>
     <div class="toggle-box">
       <i class="fa-solid fa-sun"></i>
       <label class="switch">
@@ -19,6 +12,16 @@
         <span class="slider"></span>
       </label>
       <i class="fa-solid fa-moon"></i>
+    </div>
+    <div class="nav-links">
+      <% if (user) { %>
+      <button class="button" id="saveReadmeBtn">Save Readme</button>
+      <a class="button" href="/profile">Profile</a>
+      <a class="button" href="/auth/logout">Logout</a>
+      <% } else { %>
+      <a class="button" href="/auth/login">Login</a>
+      <a class="button" href="/auth/register">Register</a>
+      <% } %>
     </div>
   </div>
 </div>

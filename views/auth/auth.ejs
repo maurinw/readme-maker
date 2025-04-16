@@ -5,19 +5,27 @@
     <link rel="stylesheet" href="/stylesheets/globals.css" />
   </head>
   <body>
-    <h1>Login</h1>
-    <% if (error) { %>
-    <p style="color: red"><%= error %></p>
-    <% } %>
-    <form action="/auth/login" method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" required />
-      <br />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required />
-      <br />
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="/auth/register">Register here</a></p>
+    <div class="auth-page">
+      <div class="wrapper">
+        <h1 class="form-header"><%= formHeader %></h1>
+
+        <form action="<%= action %>" method="<%= method || 'post' %>">
+          <% fields.forEach(function(field) { %>
+            <input
+              type="<%= field.type %>"
+              name="<%= field.name %>"
+              id="<%= field.name %>"
+              placeholder="<%= field.placeholder %>"
+              <% if (field.required) { %> required <% } %>
+            />
+            <br />
+          <% }); %>
+          <button class="button" type="submit"><%= buttonText %></button>
+        </form>
+        <p><%= additionalText %>
+          <a href="<%= linkHref %>"><%= linkText %></a>
+        </p>
+      </div>
+    </div>
   </body>
 </html>

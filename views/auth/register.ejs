@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/globals.css" />
-  </head>
-  <body>
-    <h1>Register</h1>
-    <% if (error) { %>
-    <p style="color: red"><%= error %></p>
-    <% } %>
-    <form action="/auth/register" method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" required />
-      <br />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" required />
-      <br />
-      <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="/auth/login">Login here</a></p>
-  </body>
-</html>
+<%- include("auth", {
+  title: "Register",
+  formHeader: "Register",
+  error: typeof error !== "undefined" ? error : null,
+  action: "/auth/register",
+  method: "post",
+  fields: [
+    { type: "text", name: "username", placeholder: "Choose a username", required: true },
+    { type: "password", name: "password", placeholder: "Enter password", required: true },
+    { type: "password", name: "confirm_password", placeholder: "Confirm password", required: true }
+  ],
+  buttonText: "Register",
+  additionalText: "Already have an account? ",
+  linkHref: "/auth/login",
+  linkText: "Login here"
+}) %>
