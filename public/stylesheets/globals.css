@@ -7,10 +7,11 @@
   --warning: #ffc107;
   --danger: #dc3545;
   --body-color: #010409;
+  --button-body-color: #636569;
+  --button-body-color-hover: #010409;
   --body-bg-fst: #f8f9fa;
   --body-bg-snd: #eeefef;
   --button-bg-fst: #e3e3e3;
-  --button-fst: #010409;
   --light: #f8f9fa;
   --dark: #010409;
   --spacing-xxs: 0.1rem;
@@ -37,7 +38,8 @@
   --body-bg-fst: #f8f9fa;
   --body-bg-snd: #eeefef;
   --button-bg-fst: #e3e3e3;
-  --button-fst: #010409;
+  --button-body-color: #636569;
+  --button-body-color-hover: #010409;
 }
 
 [data-theme="dark"] {
@@ -45,7 +47,8 @@
   --body-bg-fst: #222831;
   --body-bg-snd: #31363f;
   --button-bg-fst: #414752;
-  --button-fst: #f8f9fa;
+  --button-body-color: #b4b6b8;
+  --button-body-color-hover: #f8f9fa;
 }
 
 html,

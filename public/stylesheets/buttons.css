@@ -1,6 +1,6 @@
 /* buttons.css */
 .button {
-  color: var(--button-fst);
+  color: var(--button-body-color);
   background-color: var(--button-bg-fst);
   padding: var(--spacing-xs);
   font-size: var(--font-sm);
@@ -9,10 +9,12 @@
   text-align: center;
   cursor: pointer;
   text-decoration: none;
+  transition: 
+    color            0.3s ease-in-out;
 }
 
 .button:hover {
-  background-color: var(--button-bg-snd);
+  color: var(--button-body-color-hover);
 }
 
 .button:active {
