@@ -19,7 +19,6 @@
   --spacing-md: 1rem;
   --spacing-lg: 1.2rem;
   --spacing-xl: 3rem;
-  --nav-height: 4rem;
   --border-radius-sm: 0.25rem;
   --border-radius-md: 0.5rem;
   --font-xs: 0.75rem;
@@ -28,7 +27,10 @@
   --font-lg: 1.25rem;
   --font-xl: 1.5rem;
   --font-xxl: 2rem;
+  --nav-height: 4rem;
 }
+
+  
 
 [data-theme="light"] {
   --body-color: #010409;
@@ -71,7 +73,6 @@ nav.container {
 
 main.container {
   padding-top: var(--nav-height);
-  min-height: calc(100vh - var(--nav-height));
 }
 
 a {
@@ -102,8 +103,9 @@ form {
   padding: var(--spacing-lg) var(--spacing-xl);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 576px) {
   .container {
-    padding: var(--spacing-sm) var(--spacing-md);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
   }
 }

@@ -1,46 +1,28 @@
 export function initNavbar() {
   const toggleBtn = document.querySelector('.nav-toggle');
-  const navItems  = document.querySelector('.nav-items');
+  const sidebar   = document.querySelector('.sidebar');
+  const closeBtn  = sidebar?.querySelector('.sidebar-close');
 
-  if (toggleBtn && navItems) {
+  if (toggleBtn && sidebar) {
     toggleBtn.addEventListener('click', () => {
-      const open = toggleBtn.classList.toggle('open');
-      navItems.classList.toggle('open', open);
-    });
-
-    // close burger when clicking any link/button except the settings-btn
-    navItems.querySelectorAll('a, button').forEach(el => {
-      if (el.getAttribute('aria-label') !== 'Settings') {
-        el.addEventListener('click', () => {
-          if (toggleBtn.classList.contains('open')) {
-            toggleBtn.classList.remove('open');
-            navItems.classList.remove('open');
-          }
-        });
-      }
+      const isOpen = toggleBtn.classList.toggle('open');
+      sidebar.classList.toggle('open', isOpen);
     });
   }
 
-  // — Desktop settings dropdown —
-  const settingsDropdown = document.querySelector('.settings-dropdown');
-  const settingsBtn      = settingsDropdown?.querySelector('.settings-btn');
-  const settingsMenu     = settingsDropdown?.querySelector('.settings-menu');
-
-  if (settingsBtn && settingsDropdown && settingsMenu) {
-    // toggle open/close
-    settingsBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      settingsDropdown.classList.toggle('open');
-    });
-
-    // prevent clicks inside the menu from closing it
-    settingsMenu.addEventListener('click', e => {
-      e.stopPropagation();
-    });
-
-    // close when clicking anywhere else
-    document.addEventListener('click', () => {
-      settingsDropdown.classList.remove('open');
+  if (closeBtn && toggleBtn && sidebar) {
+    closeBtn.addEventListener('click', () => {
+      toggleBtn.classList.remove('open');
+      sidebar.classList.remove('open');
     });
   }
+
+  // Close sidebar when any link is clicked
+  sidebar.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      toggleBtn.classList.remove('open');
+      sidebar.classList.remove('open');
+    });
+  });
+
 }
