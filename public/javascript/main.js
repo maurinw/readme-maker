@@ -1,8 +1,10 @@
 import { initComponents } from "./components.js";
 import { initTheme } from "./theme.js";
+import { initNavbar }     from "./navbar.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initComponents();
+  initNavbar();
   initTheme();
 
   const saveBtn = document.getElementById('saveReadmeBtn');
@@ -11,7 +13,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const title = prompt("Enter a title for your readme:");
       if (!title) return;
 
-      // Use the raw markdown (with markdown formatting like "## Test")
       const content = window.fullMarkdown || document.getElementById('previewArea').innerText;
 
       try {

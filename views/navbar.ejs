@@ -1,27 +1,52 @@
 <div class="navbar">
-  <!-- Left Side -->
   <div class="logo">
     <a href="/">ReadmeMaker</a>
   </div>
-  <!-- Right Side -->
+
+  <!-- Mobile burger toggle -->
+  <button class="nav-toggle" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Right side -->
   <div class="nav-items">
-    <div class="toggle-box">
+    <!-- Mobile-only theme switch (inside burger menu) -->
+    <div class="toggle-box mobile-only">
       <i class="fa-solid fa-sun"></i>
       <label class="switch">
-        <input type="checkbox" role="switch" id="themeSwitch" />
+        <input type="checkbox" role="switch" class="theme-switch" />
         <span class="slider"></span>
       </label>
       <i class="fa-solid fa-moon"></i>
     </div>
+
+    <!-- Links/buttons -->
     <div class="nav-links">
       <% if (user) { %>
-      <button class="button" id="saveReadmeBtn">Save Readme</button>
       <a class="button" href="/profile">Profile</a>
       <a class="button" href="/auth/logout">Logout</a>
       <% } else { %>
       <a class="button" href="/auth/login">Login</a>
       <a class="button" href="/auth/register">Register</a>
       <% } %>
+      <!-- Desktop settings dropdown -->
+      <div class="settings-dropdown">
+        <button class="settings-btn" aria-label="Settings">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+        <div class="settings-menu">
+          <div class="toggle-box desktop-only">
+            <i class="fa-solid fa-sun"></i>
+            <label class="switch">
+              <input type="checkbox" role="switch" class="theme-switch" />
+              <span class="slider"></span>
+            </label>
+            <i class="fa-solid fa-moon"></i>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

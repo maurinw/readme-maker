@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/globals.css" />
-  </head>
-  <body>
-    <div class="auth-page">
-      <div class="wrapper">
-        <h1 class="form-header"><%= formHeader %></h1>
+<div class="auth-page">
+  <div class="wrapper">
+    <h1 class="form-header"><%= formHeader %></h1>
 
-        <form action="<%= action %>" method="<%= method || 'post' %>">
-          <% fields.forEach(function(field) { %>
-            <input
-              type="<%= field.type %>"
-              name="<%= field.name %>"
-              id="<%= field.name %>"
-              placeholder="<%= field.placeholder %>"
-              <% if (field.required) { %> required <% } %>
-            />
-            <br />
-          <% }); %>
-          <button class="button" type="submit"><%= buttonText %></button>
-        </form>
-        <p><%= additionalText %>
-          <a href="<%= linkHref %>"><%= linkText %></a>
-        </p>
-      </div>
-    </div>
-  </body>
-</html>
+    <% if (error) { %>
+      <p class="error-message"><%= error %></p>
+    <% } %>
+
+    <form action="<%= action %>" method="<%= method || 'post' %>">
+      <% fields.forEach(function(field) { %>
+        <input
+          type="<%= field.type %>"
+          name="<%= field.name %>"
+          id="<%= field.name %>"
+          placeholder="<%= field.placeholder %>"
+          <% if (field.required) { %> required <% } %>
+        />
+        <br />
+      <% }); %>
+      <button class="button" type="submit"><%= buttonText %></button>
+    </form>
+
+    <p>
+      <%= additionalText %>
+      <a href="<%= linkHref %>"><%= linkText %></a>
+    </p>
+  </div>
+</div>

@@ -1,27 +1,30 @@
 export function initTheme() {
-  const htmlEl      = document.documentElement;
-  const themeSwitch = document.getElementById("themeSwitch");
+  const htmlEl = document.documentElement;
+  const switches = Array.from(document.querySelectorAll('.theme-switch'));
+  if (!switches.length) return;
 
-  const setTheme = (theme) => {
-    htmlEl.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
-    themeSwitch.checked = theme === "dark";
+  // Apply & persist a theme
+  const apply = theme => {
+    htmlEl.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    // sync all toggles
+    switches.forEach(sw => sw.checked = (theme === 'dark'));
   };
 
-  const storedTheme = localStorage.getItem("theme");
-  if (storedTheme) {
-    setTheme(storedTheme);
-  } else if (
-    window.matchMedia &&
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-  ) {
-    setTheme("dark");
+  // on load: pick stored or OS‐pref
+  const stored = localStorage.getItem('theme');
+  if (stored) {
+    apply(stored);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    apply('dark');
   } else {
-    setTheme("light");
+    apply('light');
   }
 
-  themeSwitch.addEventListener("change", () => {
-    const newTheme = themeSwitch.checked ? "dark" : "light";
-    setTheme(newTheme);
+  // on any toggle flip, apply & sync
+  switches.forEach(sw => {
+    sw.addEventListener('change', () => {
+      apply(sw.checked ? 'dark' : 'light');
+    });
   });
 }

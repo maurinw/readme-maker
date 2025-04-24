@@ -15,30 +15,40 @@ router.get("/register", function (req, res, next) {
 
 // POST registration handler
 router.post("/register", function (req, res, next) {
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { username, password, confirm_password } = req.body;
+
+  // 1) make sure all three fields are present
+  if (!username || !password || !confirm_password) {
     return res.render("auth/register", {
       title: "Register",
-      error: "Please provide both username and password.",
+      error: "Please provide username, password, and confirmation."
     });
   }
-  // Check if user already exists
+
+  // 2) check that password === confirm_password
+  if (password !== confirm_password) {
+    return res.render("auth/register", {
+      title: "Register",
+      error: "Passwords do not match."
+    });
+  }
+
+  // 3) now check if user exists
   usersDB.findOne({ username: username }, function (err, user) {
     if (err) return next(err);
     if (user) {
       return res.render("auth/register", {
         title: "Register",
-        error: "Username already taken.",
+        error: "Username already taken."
       });
     }
-    // Hash the password and save the user
+    // 4) hash & insert
     bcrypt.hash(password, 10, function (err, hash) {
       if (err) return next(err);
       usersDB.insert(
         { username: username, password: hash },
         function (err, newUser) {
           if (err) return next(err);
-          // Log the user in automatically upon registration
           req.session.user = newUser;
           res.redirect("/");
         }
@@ -46,6 +56,7 @@ router.post("/register", function (req, res, next) {
     });
   });
 });
+
 
 // POST login handler
 router.post("/login", function (req, res, next) {
