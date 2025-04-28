@@ -37,4 +37,28 @@ router.get("/download", function (req, res, next) {
   });
 });
 
+router.post("/delete", function (req, res, next) {
+  if (!req.session.user) {
+    return res.status(401).send("Unauthorized");
+  }
+
+  const readmeId = req.body.readmeId;
+  readmesDB.findOne({ _id: readmeId }, function (err, readme) {
+    if (err) return next(err);
+    if (!readme) {
+      return res.status(404).send("Readme not found");
+    }
+    // Only allow owner to delete
+    if (readme.userId !== req.session.user._id) {
+      return res.status(403).send("Forbidden");
+    }
+
+    readmesDB.remove({ _id: readmeId }, {}, function (err /*, numRemoved */) {
+      if (err) return next(err);
+      // Redirect back to profile after deletion
+      res.redirect("/profile");
+    });
+  });
+});
+
 module.exports = router;
