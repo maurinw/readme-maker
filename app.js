@@ -19,7 +19,7 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-// Use express-ejs
+// Use express-ejs layouts
 app.use(expressLayouts);
 app.set("layout", "layout");
 
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Session Middleware hinzufügen
+// Session Middleware
 app.use(
   session({
     secret: "shhhh, very secret",
@@ -37,18 +37,20 @@ app.use(
   })
 );
 
-// ...
+// Make `user` and current path available in all views
 app.use(function (req, res, next) {
   res.locals.user = req.session.user;
+  res.locals.currentPath = req.path;
   next();
 });
 
-// Statische Dateien
+// Static files
 app.use(express.static(path.join(__dirname, "public")));
+
+// Routers
 app.use("/", indexRouter);
 app.use("/auth", usersRouter);
 app.use("/profile", profileRouter);
-
 app.use("/readme", readmeRouter);
 
 // catch 404 and forward to error handler

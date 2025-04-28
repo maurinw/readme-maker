@@ -57,7 +57,6 @@ router.post("/register", function (req, res, next) {
   });
 });
 
-
 // POST login handler
 router.post("/login", function (req, res, next) {
   const { username, password } = req.body;
