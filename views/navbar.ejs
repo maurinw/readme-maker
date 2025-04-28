@@ -2,34 +2,38 @@
   <div class="logo">
     <a href="/">ReadmeMaker</a>
   </div>
-
-  <!-- Burger toggle -->
-  <button class="nav-toggle" aria-label="Toggle menu">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+  <div class="nav-actions">
+    <% if (user) { %>
+    <button class="button" id="saveReadmeBtn">Save Readme</button>
+    <% } %>
+    <!-- Burger toggle -->
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
 </div>
 
 <aside class="sidebar">
   <!-- Close button -->
-  <button class=" button sidebar-close" aria-label="Close menu">×</button>
+  <button class="button sidebar-close" aria-label="Close menu">×</button>
 
-  <hr/>
+  <hr />
 
   <!-- Links -->
   <div class="sidebar-links">
     <% if (user) { %>
-      <a class="button" href="/profile">Profile</a>
-      <a class="button" href="/auth/logout">Logout</a>
+    <a class="button" href="/profile">Profile</a>
+    <a class="button" href="/auth/logout">Logout</a>
     <% } else { %>
-      <a class="button" href="/auth/login">Login</a>
-      <a class="button" href="/auth/register">Register</a>
+    <a class="button" href="/auth/login">Login</a>
+    <a class="button" href="/auth/register">Register</a>
     <% } %>
   </div>
 
   <!-- Theme toggle at bottom -->
-  <hr/>
+  <hr />
   <div class="toggle-box">
     <i class="fa-solid fa-sun"></i>
     <label class="switch">

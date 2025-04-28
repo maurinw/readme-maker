@@ -52,21 +52,8 @@
   flex-direction: column;
 }
 
-.card.preview .card-header.preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card.preview .card-header #saveReadmeBtn {
-  position: absolute;
-  top: 50%;
-  right: var(--spacing-md);
-  transform: translateY(-50%);
-}
-
 .card .card-header {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-sm) 0;
   position: relative;
   border-bottom: 1px solid var(--body-color);
 }
