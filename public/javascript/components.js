@@ -1,10 +1,8 @@
-export async function initComponents() {
+export async function initComponents(editorLayoutElement) {
   try {
-    // Fetch component data from the JSON file
     const response       = await fetch("/resources/components.json");
-    const componentsData = await response.json();
+    const componentsData = await response.json(); // Default component structures
 
-    // Get DOM elements
     const availableList = document.getElementById("availableList");
     const selectedList  = document.getElementById("selectedList");
     const textarea      = document.getElementById("editorTextarea");
@@ -12,23 +10,30 @@ export async function initComponents() {
 
     let activeItem = null;
     let dragSrcEl = null;
+    let savedComponents = [];
+    if (editorLayoutElement && editorLayoutElement.dataset.readmeComponents) {
+        try {
+            savedComponents = JSON.parse(editorLayoutElement.dataset.readmeComponents);
+        } catch (e) {
+            console.error("Failed to parse saved components data:", e);
+            savedComponents = [];
+        }
+    }
+    const isEditing = savedComponents.length > 0;
 
-    // Update the preview area by concatenating all markdown content
     const updatePreview = () => {
       let fullMarkdown = "";
       selectedList.querySelectorAll(".md-json-comp").forEach((item) => {
-        const content =
-          item.getAttribute("data-content") ||
-          componentsData[item.getAttribute("data-key")];
-        fullMarkdown += content + "\n\n";
+          const content = item.getAttribute("data-content");
+          if (content !== null) {
+              fullMarkdown += content + "\n\n";
+          }
       });
-      // Render the markdown as HTML for preview.
+
       preview.innerHTML = marked.parse(fullMarkdown.trim());
-      // Store the raw markdown in a global variable.
       window.fullMarkdown = fullMarkdown.trim();
     };
 
-    // Update the active component's content based on the textarea value
     const updateActiveComponent = () => {
       if (activeItem) {
         activeItem.setAttribute("data-content", textarea.value);
@@ -36,120 +41,137 @@ export async function initComponents() {
       }
     };
 
-    // Listen for input changes in the textarea
     textarea.addEventListener("input", updateActiveComponent);
 
-    // Add basic drag event handlers to list items
     const addDragHandlers = (item) => {
-      item.addEventListener("dragstart", (e) => {
-        e.dataTransfer.setData("text/plain", item.getAttribute("data-key"));
-        e.dataTransfer.effectAllowed = "move";
-        item.classList.add("dragging");
-      });
-      item.addEventListener("dragend", () => {
-        item.classList.remove("dragging");
-      });
+        item.setAttribute("draggable", "true");
+        item.addEventListener("dragstart", (e) => {
+            e.dataTransfer.setData("text/plain", item.getAttribute("data-key"));
+            e.dataTransfer.effectAllowed = "move";
+            item.classList.add("dragging");
+            dragSrcEl = item; // Track the source element
+        });
+        item.addEventListener("dragend", () => {
+            item.classList.remove("dragging");
+            dragSrcEl = null; // Clear tracked source
+        });
     };
 
-    // Directly execute DOM update callback without animation
+
     const animateListReorder = (domUpdateCallback) => {
       domUpdateCallback();
     };
 
-    const addItemToSelected = (availableItem) => {
-      const selectedItem     = document.createElement("li");
-      const key              = availableItem.getAttribute("data-key");
-      selectedItem.className = "button md-json-comp";
+    const createComponentListItem = (key, content, isSelected) => {
+        const li = document.createElement("li");
+        li.className = "button md-json-comp";
+        li.setAttribute("data-key", key);
+        li.textContent = key;
+        addDragHandlers(li);
 
-      selectedItem.setAttribute("draggable", "true");
-      selectedItem.setAttribute("data-key", key);
-      selectedItem.setAttribute("data-content", componentsData[key]);
-      selectedItem.textContent = key;
+        if (isSelected) {
+            li.setAttribute("data-content", content);
 
-      // Create delete button for the component using a Font Awesome icon
-      const deleteBtn     = document.createElement("button");
-      deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-      deleteBtn.className = "delete-button";
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            deleteBtn.className = "delete-button";
+            deleteBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const currentKey = li.getAttribute("data-key");
+                const wasActive = activeItem === li;
 
-      deleteBtn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (activeItem === selectedItem) {
-          textarea.value = "";
-          activeItem = null;
+                // Create corresponding item for available list
+                const availableItem = createComponentListItem(currentKey, componentsData[currentKey], false);
+                 if (!availableList.querySelector(`[data-key="${currentKey}"]`)) {
+                    availableList.appendChild(availableItem);
+                 }
+
+                selectedList.removeChild(li);
+
+                if (wasActive) {
+                    textarea.value = "";
+                    activeItem = null;
+                    const nextItem = selectedList.firstChild;
+                    if(nextItem) {
+                        nextItem.click();
+                    }
+                }
+                updatePreview();
+            });
+            li.appendChild(deleteBtn);
+
+            li.addEventListener("click", () => {
+                updateActiveComponent(); // Save changes to previous active item first
+                if (activeItem) activeItem.classList.remove("active");
+                activeItem = li;
+                li.classList.add("active");
+                textarea.value = li.getAttribute("data-content");
+            });
+
+        } else { // Item for Available List
+            li.addEventListener("click", () => {
+                if (availableList.contains(li)) {
+                    availableList.removeChild(li);
+                    const newItem = createComponentListItem(key, componentsData[key], true);
+                    selectedList.appendChild(newItem);
+                     // Activate the newly added item
+                    newItem.click();
+                    updatePreview();
+                }
+            });
         }
-        selectedList.removeChild(selectedItem);
-        availableList.appendChild(availableItem);
-        availableItem.classList.add("deselected");
-        addDragHandlers(availableItem);
-        updatePreview();
-        selectedItem.classList.remove("active");
-      });
-
-      selectedItem.appendChild(deleteBtn);
-
-      // When the item is clicked, load its content into the textarea
-      selectedItem.addEventListener("click", () => {
-        updateActiveComponent();
-        if (activeItem) activeItem.classList.remove("active");
-        activeItem = selectedItem;
-        selectedItem.classList.add("active");
-        textarea.value =
-          selectedItem.getAttribute("data-content") || componentsData[key];
-      });
-
-      addDragHandlers(selectedItem);
-      selectedList.appendChild(selectedItem);
-
-      if (!activeItem) {
-        activeItem = selectedItem;
-        selectedItem.classList.add("active");
-        textarea.value =
-          selectedItem.getAttribute("data-content") || componentsData[key];
-      }
+        return li;
     };
 
-    // Process and display available components
-    for (const key in componentsData) {
-      const li = document.createElement("li");
-      li.className = "button md-json-comp";
-      li.setAttribute("draggable", "true");
-      li.setAttribute("data-key", key);
-      li.textContent = key;
-      availableList.appendChild(li);
-      addDragHandlers(li);
-      li.addEventListener("click", () => {
-        if (availableList.contains(li)) {
-          availableList.removeChild(li);
-          addItemToSelected(li);
-          updatePreview();
+    availableList.innerHTML = ''; // Clear lists before populating
+    selectedList.innerHTML = '';
+    activeItem = null;
+    textarea.value = ''; // Clear textarea initially
+
+    const allKeys = Object.keys(componentsData);
+    const selectedKeys = new Set(savedComponents.map(comp => comp.key));
+
+    if (isEditing) {
+        // Populate selectedList based on savedComponents array order and content
+        savedComponents.forEach(comp => {
+            const item = createComponentListItem(comp.key, comp.content, true);
+            selectedList.appendChild(item);
+        });
+        // Populate availableList with keys NOT in selectedKeys
+        allKeys.forEach(key => {
+            if (!selectedKeys.has(key)) {
+                 const item = createComponentListItem(key, componentsData[key], false);
+                 availableList.appendChild(item);
+            }
+        });
+        // Activate the first selected item
+        if (selectedList.firstChild) {
+            selectedList.firstChild.click();
         }
-      });
+
+    } else {
+        allKeys.forEach(key => {
+             const item = createComponentListItem(key, componentsData[key], false);
+             availableList.appendChild(item);
+        });
+        const titleItemAvailable = availableList.querySelector('[data-key="Title"]');
+        if (titleItemAvailable) {
+            titleItemAvailable.click();
+        }
     }
 
-    // Automatically select the "Title" component if it exists
-    const titleItem = availableList.querySelector('[data-key="Title"]');
-    if (titleItem) {
-      availableList.removeChild(titleItem);
-      addItemToSelected(titleItem);
-      updatePreview();
-    }
-
-    // Drag & drop event listeners for reordering within the selected list
-    selectedList.addEventListener("dragstart", (e) => {
-      dragSrcEl = e.target.closest(".md-json-comp");
-      e.dataTransfer.effectAllowed = "move";
-      e.dataTransfer.setData("text/plain", dragSrcEl.getAttribute("data-key"));
-    });
-
+    // Drag and Drop for reordering selectedList
     selectedList.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "move";
+        e.preventDefault(); // Necessary to allow drop
+        e.dataTransfer.dropEffect = "move";
+        const target = e.target.closest(".md-json-comp");
     });
 
     selectedList.addEventListener("drop", (e) => {
       e.preventDefault();
-      if (dragSrcEl) {
-        const target = e.target.closest(".md-json-comp");
+      const target = e.target.closest(".md-json-comp");
+
+      if (dragSrcEl && dragSrcEl.parentNode === selectedList) { // Reordering selected items
         if (target && target !== dragSrcEl) {
           animateListReorder(() => {
             const rect = target.getBoundingClientRect();
@@ -162,22 +184,39 @@ export async function initComponents() {
             updatePreview();
           });
         }
-        dragSrcEl = null;
-      } else {
-        // Handle drops coming from the available list
+      } else { // Dropping from availableList
         const key = e.dataTransfer.getData("text/plain");
-        const item = availableList.querySelector(`[data-key="${key}"]`);
-        if (item) {
-          availableList.removeChild(item);
-          addItemToSelected(item);
-          updatePreview();
+        const itemFromAvailable = availableList.querySelector(`[data-key="${key}"]`);
+        if (itemFromAvailable) {
+            availableList.removeChild(itemFromAvailable);
+            const newItem = createComponentListItem(key, componentsData[key], true);
+
+            if (target) { // Dropped onto an existing selected item
+                const rect = target.getBoundingClientRect();
+                const offset = e.clientY - rect.top;
+                 if (offset > rect.height / 2) {
+                     target.parentNode.insertBefore(newItem, target.nextSibling);
+                 } else {
+                     target.parentNode.insertBefore(newItem, target);
+                 }
+            } else { // Dropped onto empty space in selectedList
+                 selectedList.appendChild(newItem);
+            }
+            newItem.click(); // Activate the new item
+            updatePreview();
         }
       }
+      dragSrcEl = null; // Reset drag source always
     });
 
-    // Update the preview on initialization
-    updatePreview();
+
+    updatePreview(); // Initial preview render based on loaded state
   } catch (error) {
-    console.error("Error loading components:", error);
+    console.error("Error initializing components:", error);
+     const preview       = document.getElementById("previewArea");
+     if(preview) preview.innerHTML = "<p>Error initializing editor components.</p>";
+     textarea.value = "Error loading editor.";
+     availableList.innerHTML = '';
+     selectedList.innerHTML = '';
   }
 }

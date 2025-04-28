@@ -6,8 +6,7 @@ router.get("/", function (req, res, next) {
   if (!req.session.user) {
     return res.redirect("/auth/login");
   }
-  // Find saved readmes belonging to this user
-  readmesDB.find({ userId: req.session.user._id }, function (err, readmes) {
+  readmesDB.find({ userId: req.session.user._id }).sort({ createdAt: -1 }).exec(function (err, readmes) {
     if (err) return next(err);
     res.render("profile/profile", { title: "Profile", readmes });
   });

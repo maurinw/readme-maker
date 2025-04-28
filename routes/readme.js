@@ -1,28 +1,85 @@
 var express         = require("express");
 var router          = express.Router();
 const { readmesDB } = require("../db");
+const createError   = require("http-errors");
 
-// POST /readme/save - save a new readme (must be logged in)
 router.post("/save", function (req, res, next) {
   if (!req.session.user) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  const { title, content } = req.body;
-  readmesDB.insert(
-    {
-      userId: req.session.user._id,
-      title,
-      content,
-      createdAt: new Date(),
-    },
-    function (err, newDoc) {
-      if (err) return next(err);
-      res.json({ success: true, readme: newDoc });
-    }
-  );
+  // Expect 'components' array instead of 'content' string
+  const { title, components, readmeId } = req.body;
+  const userId = req.session.user._id;
+
+  if (!title || !components || !Array.isArray(components) || components.length === 0) {
+    return res.status(400).json({ error: "Title and components array are required" });
+  }
+
+  // Basic validation for component structure
+  for (const comp of components) {
+      if (typeof comp.key !== 'string' || typeof comp.content !== 'string') {
+          return res.status(400).json({ error: "Invalid component structure in array" });
+      }
+  }
+
+  const dataToSave = {
+    userId: userId,
+    title,
+    components, // Store the array
+    updatedAt: new Date(),
+  };
+
+  if (readmeId) {
+    // Update existing readme
+    readmesDB.update(
+      { _id: readmeId, userId: userId },
+      { $set: dataToSave },
+      {},
+      function (err, numReplaced) {
+        if (err) return next(err);
+        if (numReplaced === 0) {
+          return res.status(404).json({ error: "Readme not found or not owned by user" });
+        }
+        readmesDB.findOne({ _id: readmeId }, (err, updatedDoc) => {
+           if (err) return next(err);
+           res.json({ success: true, readme: updatedDoc, updated: true });
+        });
+      }
+    );
+  } else {
+    dataToSave.createdAt = new Date(); // Add createdAt for new docs
+    delete dataToSave.updatedAt;
+    readmesDB.insert(
+      dataToSave,
+      function (err, newDoc) {
+        if (err) return next(err);
+        res.json({ success: true, readme: newDoc, updated: false });
+      }
+    );
+  }
 });
 
-// GET /readme/download - download a readme by its ID (public route)
+router.get("/edit/:readmeId", function (req, res, next) {
+  if (!req.session.user) {
+    return res.redirect("/auth/login");
+  }
+  const readmeId = req.params.readmeId;
+  const userId = req.session.user._id;
+
+  readmesDB.findOne({ _id: readmeId }, function (err, readme) {
+    if (err) return next(err);
+    if (!readme) {
+      return next(createError(404, "Readme not found"));
+    }
+    if (readme.userId !== userId) {
+       return next(createError(403, "Forbidden"));
+    }
+    // Pass the full readme object, including the 'components' array
+    res.render("index", { title: "Edit Readme", showSave: true, readme: readme });
+  });
+});
+
+
 router.get("/download", function (req, res, next) {
   const readmeId = req.query.readmeId;
   readmesDB.findOne({ _id: readmeId }, function (err, readme) {
@@ -30,10 +87,16 @@ router.get("/download", function (req, res, next) {
     if (!readme) {
       return res.status(404).send("Readme not found");
     }
-    // Set headers to prompt download as a Markdown file.
-    res.setHeader("Content-disposition", 'attachment; filename="readme.md"');
-    res.setHeader("Content-Type", "text/markdown");
-    res.send(readme.content);
+
+    // Generate content from components array
+    let fullContent = "";
+    if (readme.components && Array.isArray(readme.components)) {
+        fullContent = readme.components.map(comp => comp.content).join("\n\n");
+    }
+
+    res.setHeader("Content-disposition", `attachment; filename="${readme.title || 'readme'}.md"`);
+    res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+    res.send(fullContent);
   });
 });
 
@@ -48,14 +111,12 @@ router.post("/delete", function (req, res, next) {
     if (!readme) {
       return res.status(404).send("Readme not found");
     }
-    // Only allow owner to delete
     if (readme.userId !== req.session.user._id) {
       return res.status(403).send("Forbidden");
     }
 
-    readmesDB.remove({ _id: readmeId }, {}, function (err /*, numRemoved */) {
+    readmesDB.remove({ _id: readmeId }, {}, function (err) {
       if (err) return next(err);
-      // Redirect back to profile after deletion
       res.redirect("/profile");
     });
   });

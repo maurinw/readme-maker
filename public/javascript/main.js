@@ -3,17 +3,43 @@ import { initTheme } from "./theme.js";
 import { initNavbar }     from "./navbar.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  await initComponents();
+  // Pass the editor layout element to initComponents
+  const editorLayout = document.getElementById('editorLayout');
+  await initComponents(editorLayout);
   initNavbar();
   initTheme();
 
   const saveBtn = document.getElementById('saveReadmeBtn');
-  if (saveBtn) {
-    saveBtn.addEventListener('click', async () => {
-      const title = prompt("Enter a title for your readme:");
-      if (!title) return;
+  const titleInput = document.getElementById('readmeTitleInput');
+  const readmeIdInput = document.getElementById('readmeIdInput');
+  const selectedList = document.getElementById('selectedList'); // Get selected list reference
 
-      const content = window.fullMarkdown || document.getElementById('previewArea').innerText;
+  if (saveBtn && titleInput && selectedList) {
+    saveBtn.addEventListener('click', async () => {
+      const title = titleInput.value.trim();
+      const readmeId = readmeIdInput.value || null; // Get the hidden readme ID
+
+      if (!title) {
+        alert("Please enter a title for your readme.");
+        titleInput.focus();
+        return;
+      }
+
+      const components = [];
+      const selectedItems = selectedList.querySelectorAll('li.md-json-comp');
+      selectedItems.forEach(item => {
+          const key = item.getAttribute('data-key');
+          const content = item.getAttribute('data-content');
+          if (key && content !== null) { // Ensure both key and content exist
+             components.push({ key, content });
+          }
+      });
+
+      if (components.length === 0) {
+         alert("Please add at least one component to your readme.");
+         return;
+      }
+
 
       try {
         const response = await fetch('/readme/save', {
@@ -21,13 +47,20 @@ document.addEventListener("DOMContentLoaded", async () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ title, content })
+          // Send components array instead of content string
+          body: JSON.stringify({ title, components, readmeId })
         });
         const result = await response.json();
-        if (result.success) {
-          alert('Readme saved successfully!');
+
+        if (response.ok && result.success) {
+           alert(`Readme ${result.updated ? 'updated' : 'saved'} successfully!`);
+           if(result.readme && result.readme._id) {
+               readmeIdInput.value = result.readme._id;
+               titleInput.value = result.readme.title;
+               editorLayout.dataset.readmeComponents = JSON.stringify(result.readme.components);
+           }
         } else {
-          alert('An error occurred while saving the readme.');
+          alert(`An error occurred: ${result.error || 'Unknown error'}`);
         }
       } catch (error) {
         console.error('Error:', error);

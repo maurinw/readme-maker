@@ -16,16 +16,12 @@
     />
   </head>
   <body>
-    <!-- Navbar -->
     <nav class="container"><%- include('./navbar') %></nav>
 
-    <!-- Main Content -->
     <main class="container"><%- body -%></main>
 
-    <!-- Readme Menu -->
-     <footer class="container"><%- include('./readme-menu') %></footer>
+     <footer class="container"><%- include('./readme-menu', { readme: typeof readme !== 'undefined' ? readme : null }) %></footer>
 
-    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/10.0.0/marked.min.js"></script>
     <script type="module" src="/javascript/main.js"></script>
   </body>

@@ -1,5 +1,4 @@
-<div class="editor-layout">
-  <!-- Card for Components -->
+<div class="editor-layout" id="editorLayout" data-readme-components="<%= typeof readme !== 'undefined' && readme && readme.components ? JSON.stringify(readme.components) : '[]' %>">
   <div class="card column components">
     <div class="card-header">
       <h2>Components</h2>
@@ -16,17 +15,16 @@
     </div>
   </div>
 
-  <!-- Card for Editor -->
   <div class="card column editor">
     <div class="card-header">
       <h2>Editor</h2>
     </div>
     <div class="card-body">
-      <textarea id="editorTextarea" placeholder="Edit content..."></textarea>
+       <!-- Textarea initial value is now set by components.js based on loaded data -->
+      <textarea id="editorTextarea" placeholder="Select a component to edit..."></textarea>
     </div>
   </div>
 
-  <!-- Card for Preview -->
   <div class="card column preview">
     <div class="card-header">
       <h2>Preview</h2>
@@ -38,5 +36,3 @@
     </div>
   </div>
 </div>
-
-

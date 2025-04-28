@@ -1,5 +1,11 @@
-<% if (user && currentPath === "/") { %>
-<div class="readme-menu">
-  <button class="button" id="saveReadmeBtn">Save Readme</button>
-</div>
+<%
+const isEditorView = currentPath === '/' || currentPath.startsWith('/readme/edit/');
+%>
+
+<% if (user && isEditorView) { %>
+  <div class="readme-menu">
+    <input type="hidden" id="readmeIdInput" value="<%= typeof readme !== 'undefined' && readme ? readme._id : '' %>">
+    <input type="text" id="readmeTitleInput" placeholder="Readme Title" value="<%= typeof readme !== 'undefined' && readme ? readme.title : '' %>" required>
+    <button class="button" id="saveReadmeBtn">Save Readme</button>
+  </div>
 <% } %>
