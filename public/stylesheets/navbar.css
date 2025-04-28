@@ -1,10 +1,5 @@
 /* Navbar container */
 .navbar {
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  background: var(--body-bg-fst);
   display: flex;
   align-items: center;
   justify-content: space-between;

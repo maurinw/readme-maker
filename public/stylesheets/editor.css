@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 300px 1fr 1fr;
   gap: var(--spacing-md);
-  height: 85vh;
+  height: 82vh;
 }
 
 @media (max-width: 768px) {
@@ -96,4 +96,8 @@
   border: none;
   cursor: pointer;
   color: inherit;
+}
+
+.readme-menu {
+  display: flex;
 }

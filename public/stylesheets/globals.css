@@ -28,6 +28,7 @@
   --font-xl: 1.5rem;
   --font-xxl: 2rem;
   --nav-height: 4rem;
+  --menu-height: 4rem;
 }
 
 [data-theme="light"] {
@@ -73,6 +74,18 @@ nav.container {
 
 main.container {
   padding-top: var(--nav-height);
+  padding-bottom: var(--menu-height);
+}
+
+footer.container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  height: var(--menu-height);
+  background: var(--body-bg-fst);
+  padding: var(--spacing-sm) var(--spacing-xl);
 }
 
 a {
