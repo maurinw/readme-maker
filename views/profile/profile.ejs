@@ -1,26 +1,36 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel="stylesheet" href="/stylesheets/globals.css" />
-  </head>
-  <body>
-    <h1>Your Saved Readmes</h1>
-    <% if (readmes.length === 0) { %>
-    <p>You haven't saved any readmes yet.</p>
-    <% } else { %>
-    <ul>
-      <% readmes.forEach(function(readme) { %>
-      <li>
+<h1>Your Saved Readmes</h1>
+<div class="profile">
+  <% if (readmes.length === 0) { %>
+  <p>You haven't saved any readmes yet.</p>
+  <% } else { %>
+  <ul class="readme-grid">
+    <% readmes.forEach(function(readme) { %>
+    <li>
+      <div>
         <strong><%= readme.title || 'Untitled' %></strong>
-        <!-- A simple form to download the readme -->
-        <form action="/readme/download" method="get" style="display: inline">
+      </div>
+
+      <div>
+        <!-- Download -->
+        <form action="/readme/download" method="get">
           <input type="hidden" name="readmeId" value="<%= readme._id %>" />
-          <button type="submit">Download</button>
+          <button type="submit" class="button">Download</button>
         </form>
-      </li>
-      <% }); %>
-    </ul>
-    <% } %>
-  </body>
-</html>
+
+        <!-- Edit -->
+        <form action="/readme/edit" method="get">
+          <input type="hidden" name="readmeId" value="<%= readme._id %>" />
+          <button type="submit" class="button">Edit</button>
+        </form>
+
+        <!-- Delete -->
+        <form action="/readme/delete" method="post">
+          <input type="hidden" name="readmeId" value="<%= readme._id %>" />
+          <button type="submit" class="button button-danger">Delete</button>
+        </form>
+      </div>
+    </li>
+    <% }); %>
+  </ul>
+  <% } %>
+</div>
