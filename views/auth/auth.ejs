@@ -1,23 +1,33 @@
-<div class="auth-page">
+<div class="auth">
   <div class="wrapper">
-    <h1 class="form-header"><%= formHeader %></h1>
+    <h1><%= formHeader %></h1>
 
     <% if (error) { %>
-      <p class="error-message"><%= error %></p>
+    <p class="error-message"><%= error %></p>
     <% } %>
 
-    <form action="<%= action %>" method="<%= method || 'post' %>">
+    <form
+      class="auth-form"
+      action="<%= action %>"
+      method="<%= method || 'post' %>"
+    >
       <% fields.forEach(function(field) { %>
-        <input
-          type="<%= field.type %>"
-          name="<%= field.name %>"
-          id="<%= field.name %>"
-          placeholder="<%= field.placeholder %>"
-          <% if (field.required) { %> required <% } %>
-        />
-        <br />
-      <% }); %>
-      <button class="button" type="submit"><%= buttonText %></button>
+      <input
+        class="auth-input"
+        type="<%= field.type %>"
+        name="<%= field.name %>"
+        id="<%= field.name %>"
+        placeholder="<%= field.placeholder %>"
+        <%
+        if
+        (field.required)
+        {
+        %
+      />
+      required <% } %> /> <% }); %>
+      <button class="button primary-button" type="submit">
+        <%= buttonText %>
+      </button>
     </form>
 
     <p>

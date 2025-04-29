@@ -1,0 +1,31 @@
+<div class="footer">
+  <div class="toggle-box">
+    <i class="fa-solid fa-sun"></i>
+    <label class="switch">
+      <input type="checkbox" role="switch" class="theme-switch" />
+      <span class="slider"></span>
+    </label>
+    <i class="fa-solid fa-moon"></i>
+  </div>
+  <div class="saveReadme">
+    <% const isEditorView = currentPath === '/' ||
+    currentPath.startsWith('/readme/edit/'); %> <% if (user && isEditorView) {
+    %>
+    <input
+      type="hidden"
+      id="readmeIdInput"
+      value="<%= typeof readme !== 'undefined' && readme ? readme._id : '' %>"
+    />
+    <input
+      type="text"
+      id="readmeTitleInput"
+      placeholder="Readme Title"
+      value="<%= typeof readme !== 'undefined' && readme ? readme.title : '' %>"
+      required
+    />
+    <button class="button primary-button" id="saveReadmeBtn">
+      Save Readme
+    </button>
+  </div>
+</div>
+<% } %>

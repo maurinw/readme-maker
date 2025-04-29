@@ -1,0 +1,11 @@
+.nav-actions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.logo-img {
+    height: 30px;
+    width: auto;
+    vertical-align: middle;
+    display: inline-block;
+}

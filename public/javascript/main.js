@@ -1,21 +1,19 @@
 import { initComponents } from "./components.js";
 import { initTheme } from "./theme.js";
-import { initNavbar } from "./navbar.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  initNavbar();
   initTheme();
 
-  const editorLayout = document.getElementById('editorLayout');
+  const editor = document.getElementById('editor');
 
-  if (editorLayout) {
+  if (editor) {
     try {
-      await initComponents(editorLayout);
+      await initComponents(editor);
 
-      const saveBtn = document.getElementById('saveReadmeBtn');
-      const titleInput = document.getElementById('readmeTitleInput');
+      const saveBtn       = document.getElementById('saveReadmeBtn');
+      const titleInput    = document.getElementById('readmeTitleInput');
       const readmeIdInput = document.getElementById('readmeIdInput');
-      const selectedList = document.getElementById('selectedList');
+      const selectedList  = document.getElementById('selectedList');
 
       if (saveBtn && titleInput && selectedList) {
         saveBtn.addEventListener('click', async () => {
@@ -59,8 +57,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 readmeIdInput.value = result.readme._id;
                 titleInput.value = result.readme.title;
                 // Update the data attribute directly if needed after save
-                if (editorLayout) {
-                    editorLayout.dataset.readmeComponents = JSON.stringify(result.readme.components);
+                if (editor) {
+                    editor.dataset.readmeComponents = JSON.stringify(result.readme.components);
                 }
               }
             } else {

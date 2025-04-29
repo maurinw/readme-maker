@@ -1,0 +1,72 @@
+/* --- CARD STYLING --- */
+.card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #ccc;
+}
+
+.card-header {
+    flex-shrink: 0;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-bottom: 1px solid #ccc;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.card-body {
+    flex-grow: 1;
+    min-height: 0;
+    padding: var(--spacing-md);
+}
+
+.card-sub-header {
+    margin: 0;
+}
+
+.edit .card-body #editorTextarea {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    overflow: auto;
+    padding: var(--spacing-xs);
+    font-family: monospace;
+    outline: none;
+    border: 1px dashed gray;
+    box-sizing: border-box;
+    color: var(--body-text);
+    background-color: var(--body-bg-fst);
+}
+
+.preview .card-body #previewArea {
+    height: 100%;
+    overflow: auto;
+    padding: var(--spacing-xs);
+    border: 1px dashed gray;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .card {
+        min-height: 300px;
+    }
+
+    .card-body {
+        min-height: initial;
+    }
+
+    .preview .card-body #previewArea {
+        height: auto;
+        overflow: visible;
+        border: none;
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .edit .card-body textarea {
+        min-height: 200px;
+    }
+}

@@ -1,19 +1,19 @@
-export async function initComponents(editorLayoutElement) {
+export async function initComponents(editorElement) {
   try {
     const response       = await fetch("/resources/components.json");
-    const componentsData = await response.json(); // Default component structures
+    const componentsData = await response.json();
 
     const availableList = document.getElementById("availableList");
     const selectedList  = document.getElementById("selectedList");
     const textarea      = document.getElementById("editorTextarea");
     const preview       = document.getElementById("previewArea");
 
-    let activeItem = null;
-    let dragSrcEl = null;
+    let activeItem      = null;
+    let dragSrcEl       = null;
     let savedComponents = [];
-    if (editorLayoutElement && editorLayoutElement.dataset.readmeComponents) {
+    if (editorElement && editorElement.dataset.readmeComponents) {
         try {
-            savedComponents = JSON.parse(editorLayoutElement.dataset.readmeComponents);
+            savedComponents = JSON.parse(editorElement.dataset.readmeComponents);
         } catch (e) {
             console.error("Failed to parse saved components data:", e);
             savedComponents = [];
@@ -64,7 +64,7 @@ export async function initComponents(editorLayoutElement) {
 
     const createComponentListItem = (key, content, isSelected) => {
         const li = document.createElement("li");
-        li.className = "button md-json-comp";
+        li.className = "button primary-button md-json-comp";
         li.setAttribute("data-key", key);
         li.textContent = key;
         addDragHandlers(li);

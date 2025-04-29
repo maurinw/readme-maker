@@ -1,0 +1,11 @@
+.saveReadme {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+#readmeTitleInput {
+    flex-grow: 1;
+    width: auto;
+    margin-bottom: 0;
+}

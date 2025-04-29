@@ -2,25 +2,33 @@
 <html data-theme="dark">
   <head>
     <title><%= title %></title>
+    <!-- Layout and GLobal Stylesheets -->
     <link rel="stylesheet" href="/stylesheets/globals.css" />
-    <link rel="stylesheet" href="/stylesheets/navbar.css" />
-    <link rel="stylesheet" href="/stylesheets/editor.css" />
-    <link rel="stylesheet" href="/stylesheets/auth.css" />
-    <link rel="stylesheet" href="/stylesheets/profile.css" />
-    <link rel="stylesheet" href="/stylesheets/buttons.css" />
-    <link rel="stylesheet" href="/stylesheets/menu.css" />
-
+    <link rel="stylesheet" href="/stylesheets/layout.css" />
+    <!-- Components Stylesheets -->
+    <link rel="stylesheet" href="/stylesheets/components/cards.css" />
+    <link rel="stylesheet" href="/stylesheets/components/buttons.css" />
+    <link rel="stylesheet" href="/stylesheets/components/scrollbar.css" />
+    <link rel="stylesheet" href="/stylesheets/components/input.css" />
+    <!-- Sections Stylesheets -->
+    <link rel="stylesheet" href="/stylesheets/sections/navbar.css" />
+    <link rel="stylesheet" href="/stylesheets/sections/footer.css" />
+    <link rel="stylesheet" href="/stylesheets/sections/auth.css" />
+    <link rel="stylesheet" href="/stylesheets/sections/editor.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
     />
   </head>
   <body>
-    <nav class="container"><%- include('./navbar') %></nav>
+    <nav class="layout-nav"><%- include('./navbar') %></nav>
 
-    <main class="container"><%- body -%></main>
+    <main class="layout-main"><%- body -%></main>
 
-     <footer class="container"><%- include('./readme-menu', { readme: typeof readme !== 'undefined' ? readme : null }) %></footer>
+    <footer class="layout-footer">
+      <%- include('./footer', { readme: typeof readme !== 'undefined' ? readme :
+      null }) %>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/10.0.0/marked.min.js"></script>
     <script type="module" src="/javascript/main.js"></script>

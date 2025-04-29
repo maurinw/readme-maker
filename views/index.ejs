@@ -1,31 +1,34 @@
-<div class="editor-layout" id="editorLayout" data-readme-components="<%= typeof readme !== 'undefined' && readme && readme.components ? JSON.stringify(readme.components) : '[]' %>">
-  <div class="card column components">
+<div
+  class="editor"
+  id="editor"
+  data-readme-components="<%= typeof readme !== 'undefined' && readme && readme.components ? JSON.stringify(readme.components) : '[]' %>"
+>
+  <div class="card components">
     <div class="card-header">
       <h2>Components</h2>
     </div>
     <div class="card-body">
-      <div>
-        <h5>Selected Components</h5>
-        <ul id="selectedList"></ul>
-      </div>
-      <div>
-        <h5>Available Components</h5>
-        <ul id="availableList"></ul>
-      </div>
+      <h3 class="card-sub-header">Selected Components</h3>
+      <ul id="selectedList"></ul>
+
+      <h3 class="card-sub-header">Available Components</h3>
+      <ul id="availableList"></ul>
     </div>
   </div>
 
-  <div class="card column editor">
+  <div class="card edit">
     <div class="card-header">
       <h2>Editor</h2>
     </div>
     <div class="card-body">
-       <!-- Textarea initial value is now set by components.js based on loaded data -->
-      <textarea id="editorTextarea" placeholder="Select a component to edit..."></textarea>
+      <textarea
+        id="editorTextarea"
+        placeholder="Select a component to edit..."
+      ></textarea>
     </div>
   </div>
 
-  <div class="card column preview">
+  <div class="card preview">
     <div class="card-header">
       <h2>Preview</h2>
     </div>

@@ -1,31 +1,29 @@
-<h1>Your Saved Readmes</h1>
-<div class="profile">
-  <% if (readmes.length === 0) { %>
-  <p>You haven't saved any readmes yet.</p>
-  <% } else { %>
-  <ul class="readme-grid">
-    <% readmes.forEach(function(readme) { %>
-    <li>
-      <div>
-        <strong><%= readme.title || 'Untitled' %></strong>
+<% if (readmes.length === 0) { %>
+<p>You haven't saved any readmes yet.</p>
+<% } else { %>
+<ul class="profile">
+  <% readmes.forEach(function(readme) { %>
+  <li>
+    <div>
+      <strong><%= readme.title || 'Untitled' %></strong>
+    </div>
 
-      </div>
+    <div class="profile-actions">
+      <form action="/readme/download" method="get" style="display: inline">
+        <input type="hidden" name="readmeId" value="<%= readme._id %>" />
+        <button type="submit" class="button primary-button">Download</button>
+      </form>
 
-      <div class="profile-actions">
-        <form action="/readme/download" method="get" style="display: inline;">
-          <input type="hidden" name="readmeId" value="<%= readme._id %>" />
-          <button type="submit" class="button">Download</button>
-        </form>
+      <a href="/readme/edit/<%= readme._id %>" class="button primary-button"
+        >Edit</a
+      >
 
-        <a href="/readme/edit/<%= readme._id %>" class="button">Edit</a>
-
-        <form action="/readme/delete" method="post" style="display: inline;">
-          <input type="hidden" name="readmeId" value="<%= readme._id %>" />
-          <button type="submit" class="button button-danger">Delete</button>
-        </form>
-      </div>
-    </li>
-    <% }); %>
-  </ul>
-  <% } %>
-</div>
+      <form action="/readme/delete" method="post" style="display: inline">
+        <input type="hidden" name="readmeId" value="<%= readme._id %>" />
+        <button type="submit" class="button primary-button">Delete</button>
+      </form>
+    </div>
+  </li>
+  <% }); %>
+</ul>
+<% } %>
