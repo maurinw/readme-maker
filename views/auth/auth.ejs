@@ -3,7 +3,7 @@
     <h1><%= formHeader %></h1>
 
     <% if (error) { %>
-    <p class="error-message"><%= error %></p>
+      <p class="error-message"><%= error %></p>
     <% } %>
 
     <form
@@ -12,19 +12,15 @@
       method="<%= method || 'post' %>"
     >
       <% fields.forEach(function(field) { %>
-      <input
-        class="auth-input"
-        type="<%= field.type %>"
-        name="<%= field.name %>"
-        id="<%= field.name %>"
-        placeholder="<%= field.placeholder %>"
-        <%
-        if
-        (field.required)
-        {
-        %
-      />
-      required <% } %> /> <% }); %>
+        <input
+          class="auth-input"
+          type="<%= field.type %>"
+          name="<%= field.name %>"
+          id="<%= field.name %>"
+          placeholder="<%= field.placeholder %>"
+          <% if (field.required) { %> required <% } %> 
+        />  
+      <% }); %>
       <button class="button primary-button" type="submit">
         <%= buttonText %>
       </button>
