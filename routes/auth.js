@@ -17,7 +17,6 @@ router.get("/register", function (req, res, next) {
 router.post("/register", function (req, res, next) {
   const { username, password, confirm_password } = req.body;
 
-  // 1) make sure all three fields are present
   if (!username || !password || !confirm_password) {
     return res.render("auth/register", {
       title: "Register",
@@ -25,7 +24,6 @@ router.post("/register", function (req, res, next) {
     });
   }
 
-  // 2) check that password === confirm_password
   if (password !== confirm_password) {
     return res.render("auth/register", {
       title: "Register",
@@ -33,7 +31,6 @@ router.post("/register", function (req, res, next) {
     });
   }
 
-  // 3) now check if user exists
   usersDB.findOne({ username: username }, function (err, user) {
     if (err) return next(err);
     if (user) {
@@ -42,7 +39,6 @@ router.post("/register", function (req, res, next) {
         error: "Username already taken."
       });
     }
-    // 4) hash & insert
     bcrypt.hash(password, 10, function (err, hash) {
       if (err) return next(err);
       usersDB.insert(
@@ -66,7 +62,6 @@ router.post("/login", function (req, res, next) {
       error: "Please enter both username and password.",
     });
   }
-  // Look up the user in the database
   usersDB.findOne({ username: username }, function (err, user) {
     if (err) return next(err);
     if (!user) {
@@ -75,7 +70,6 @@ router.post("/login", function (req, res, next) {
         error: "Invalid username or password.",
       });
     }
-    // Compare the submitted password with the hashed password
     bcrypt.compare(password, user.password, function (err, result) {
       if (err) return next(err);
       if (result) {

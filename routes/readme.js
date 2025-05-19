@@ -7,7 +7,6 @@ router.post("/save", function (req, res, next) {
   if (!req.session.user) {
     return res.status(401).json({ error: "Unauthorized" });
   }
-  // Expect 'components' array instead of 'content' string
   const { title, components, readmeId } = req.body;
   const userId = req.session.user._id;
 
@@ -25,12 +24,11 @@ router.post("/save", function (req, res, next) {
   const dataToSave = {
     userId: userId,
     title,
-    components, // Store the array
+    components,
     updatedAt: new Date(),
   };
 
   if (readmeId) {
-    // Update existing readme
     readmesDB.update(
       { _id: readmeId, userId: userId },
       { $set: dataToSave },
@@ -47,7 +45,7 @@ router.post("/save", function (req, res, next) {
       }
     );
   } else {
-    dataToSave.createdAt = new Date(); // Add createdAt for new docs
+    dataToSave.createdAt = new Date();
     delete dataToSave.updatedAt;
     readmesDB.insert(
       dataToSave,
@@ -74,7 +72,6 @@ router.get("/edit/:readmeId", function (req, res, next) {
     if (readme.userId !== userId) {
        return next(createError(403, "Forbidden"));
     }
-    // Pass the full readme object, including the 'components' array
     res.render("index", { title: "Edit Readme", showSave: true, readme: readme });
   });
 });
@@ -88,7 +85,6 @@ router.get("/download", function (req, res, next) {
       return res.status(404).send("Readme not found");
     }
 
-    // Generate content from components array
     let fullContent = "";
     if (readme.components && Array.isArray(readme.components)) {
         fullContent = readme.components.map(comp => comp.content).join("\n\n");
